@@ -1,11 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
-interface GlobalState {
-  theme: string; // Theme can be 'default', 'dark', etc.
-}
+import { GlobalState } from "./store-interfaces";
 
 const initialState: GlobalState = {
   theme: "default", // Default theme
+  folderList: [], // Initialize with an empty folder list
 };
 
 const globalSlice = createSlice({
@@ -13,12 +11,14 @@ const globalSlice = createSlice({
   initialState,
   reducers: {
     setTheme: (state, action: PayloadAction<boolean>) => {
-      // This reducer can be used to set a loading state
-      // For example, you might want to show a loading spinner
-      state.theme = action.payload ? "dark" : "default"; // Toggle between dark and default themes
+      state.theme = action.payload ? "dark" : "default";
+    },
+    addFolder: (state, action: PayloadAction<{ id: string; name: string }>) => {
+      const { id, name } = action.payload;
+      state.folderList.push({ id, name });
     },
   },
 });
 
-export const { setTheme } = globalSlice.actions;
+export const { setTheme, addFolder } = globalSlice.actions;
 export default globalSlice.reducer;

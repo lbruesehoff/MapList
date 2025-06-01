@@ -4,7 +4,16 @@
   padding: 20px;
 }
 .folder-container {
+  display: flex;
+  flex-direction: column;
   width: 30vw;
+  margin-right: 1rem;
+  max-height: 90vh;
+  overflow: auto;
+}
+
+.folder {
+  margin: 1rem 0;
 }
 .map-container {
 }

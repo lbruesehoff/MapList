@@ -1,4 +1,5 @@
 import React from "react";
+import "./Folder.scss";
 
 interface FolderProps {
   name?: string;
@@ -7,7 +8,9 @@ interface FolderProps {
 
 const Folder: React.FC<FolderProps> = ({ name, children }) => {
   return (
-    <div className="folder-container">
+    <div className="folder-component-container">
+      {/* FOLDER LIST */}
+
       <ul className="list bg-base-100 rounded-box shadow-md">
         <li className="list-row">
           <div>
