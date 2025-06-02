@@ -1,4 +1,8 @@
-import { APIProvider, Map as GoogleMap } from "@vis.gl/react-google-maps";
+import {
+  APIProvider,
+  Map as GoogleMap,
+  Marker,
+} from "@vis.gl/react-google-maps";
 import React from "react";
 import "./Map.scss";
 
@@ -11,11 +15,20 @@ const Map: React.FC = () => {
         <div className="map">
           <GoogleMap
             style={{}}
-            defaultCenter={{ lat: 22.54992, lng: 0 }}
-            defaultZoom={3}
+            defaultCenter={{ lat: 44.9778, lng: -93.265 }}
+            defaultZoom={10}
             gestureHandling={"greedy"}
-            disableDefaultUI={true}
-          />
+            disableDefaultUI={false}
+          >
+            <Marker
+              position={{ lat: 44.9778, lng: -93.265 }}
+              title="Marker Title"
+              label=""
+              onClick={() => {
+                console.log("Marker clicked");
+              }}
+            />
+          </GoogleMap>
         </div>
       </APIProvider>
     </div>
