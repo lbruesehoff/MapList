@@ -1,12 +1,12 @@
 import React from "react";
-import "./Location-List.scss";
+import "./Home.scss";
 import Folder from "../../components/Folder/Folder";
 import Map from "../../components/Map/Map";
 import { useDispatch, useSelector } from "react-redux";
-import { useForm } from "react-hook-form";
-import { addFolder } from "../../store/global-store";
+import { set, useForm } from "react-hook-form";
+import { addFolder, setFolderOpen } from "../../store/global-store";
 
-const LocationList: React.FC = () => {
+const Home: React.FC = () => {
   const {
     register,
     handleSubmit,
@@ -16,6 +16,7 @@ const LocationList: React.FC = () => {
   } = useForm();
   const dispatch = useDispatch();
   const folderList = useSelector((state: any) => state.global.folderList);
+  const folderOpen = useSelector((state: any) => state.global.folderOpen);
 
   const onSubmit = () => {
     dispatch(
@@ -25,34 +26,62 @@ const LocationList: React.FC = () => {
   return (
     <div className="list-container">
       <div className="folder-container">
-        <div className="add-folder">
-          <button
-            className="btn btn-circle add-folder-button"
-            onClick={() => {
-              const modal = document.getElementById(
-                "my_modal_3"
-              ) as HTMLDialogElement | null;
-              if (modal) modal.showModal();
-            }}
-          >
-            <svg
-              className="w-6 h-6 text-gray-800 dark:text-white fill-primary"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              width="35"
-              height="35"
-              fill="none"
-              viewBox="0 0 24 24"
+        <div className="buttons">
+          <div className="add-folder">
+            <button
+              className="btn btn-circle add-folder-button"
+              onClick={() => {
+                const modal = document.getElementById(
+                  "my_modal_3"
+                ) as HTMLDialogElement | null;
+                if (modal) modal.showModal();
+              }}
             >
-              <path
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="1.5"
-                d="M12 7.757v8.486M7.757 12h8.486M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-              />
-            </svg>
-          </button>
+              <svg
+                className="w-6 h-6 text-gray-800 dark:text-white fill-primary"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width="35"
+                height="35"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="1.5"
+                  d="M12 7.757v8.486M7.757 12h8.486M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                />
+              </svg>
+            </button>
+          </div>
+          {folderOpen && (
+            <div className="folder-back">
+              <button
+                className="btn btn-circle add-folder-button"
+                onClick={() => dispatch(setFolderOpen(false))}
+              >
+                <svg
+                  className="w-6 h-6 red dark:text-blue fill-secondary"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 12h14M5 12l4-4m-4 4 4 4"
+                  />
+                </svg>
+              </button>
+            </div>
+          )}
         </div>
 
         {/* DIALOG */}
@@ -116,4 +145,4 @@ const LocationList: React.FC = () => {
   );
 };
 
-export default LocationList;
+export default Home;

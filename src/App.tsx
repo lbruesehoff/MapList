@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
 import Navbar from "./components/Navbar/Navbar";
-import LocationList from "./pages/Location-List/Location-List";
+import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
 import { Routes, Route } from "react-router-dom";
 
@@ -11,7 +11,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/login" element={<Login />} />
-        <Route path="/location-list" element={<LocationList />} />
+        <Route path="/home" element={<Home />} />
         {/* Add more routes here as needed */}
       </Routes>
     </div>

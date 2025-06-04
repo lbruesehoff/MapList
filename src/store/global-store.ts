@@ -1,9 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { GlobalState } from "./store-interfaces";
+import { set } from "react-hook-form";
 
 const initialState: GlobalState = {
   theme: "default", // Default theme
-  folderList: [], // Initialize with an empty folder list
+  folderList: [],
+  folderOpen: false, // Initialize with an empty folder list
 };
 
 const globalSlice = createSlice({
@@ -17,8 +19,11 @@ const globalSlice = createSlice({
       const { id, name } = action.payload;
       state.folderList.push({ id, name });
     },
+    setFolderOpen: (state, action: PayloadAction<boolean>) => {
+      state.folderOpen = action.payload;
+    },
   },
 });
 
-export const { setTheme, addFolder } = globalSlice.actions;
+export const { setTheme, addFolder, setFolderOpen } = globalSlice.actions;
 export default globalSlice.reducer;

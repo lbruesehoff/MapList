@@ -1,6 +1,18 @@
 .folder-component-container {
   display: flex;
   flex-direction: column;
+  animation: slideInLeft 500ms ease-in;
+
+  @keyframes slideInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-100px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
 }
 
 .add-folder {
@@ -15,4 +27,19 @@
 
 .folder-name-input {
   margin: 2rem 0;
+}
+
+.location-list-container {
+  animation: slideInRight 500ms ease-in;
+
+  @keyframes slideInRight {
+    from {
+      opacity: 0;
+      transform: translateX(-100px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
 }
