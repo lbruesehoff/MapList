@@ -12,6 +12,7 @@ interface FolderProps {
 const Folder: React.FC<FolderProps> = ({ name, children }) => {
   const dispatch = useDispatch();
   const openFolder = useSelector((state: any) => state.global.folderOpen);
+  const locationList = useSelector((state: any) => state.global.locationList);
 
   const toggleFolderOpen = () => {
     dispatch(setFolderOpen(true));
@@ -60,21 +61,7 @@ const Folder: React.FC<FolderProps> = ({ name, children }) => {
         </div>
       ) : (
         <div className="location-list-container">
-          <LocationList
-            locations={[
-              { id: 1, name: "Central Park", address: "New York, NY 10022" },
-              {
-                id: 2,
-                name: "Golden Gate Bridge",
-                address: "San Francisco, CA 94129",
-              },
-              {
-                id: 3,
-                name: "Space Needle",
-                address: "400 Broad St, Seattle, WA 98109",
-              },
-            ]}
-          ></LocationList>
+          <LocationList locations={locationList}></LocationList>
         </div>
       )}
     </div>
