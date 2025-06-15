@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./Home.scss";
 import Folder from "../../components/Folder/Folder";
 import Map from "../../components/Map/Map";
@@ -9,6 +9,7 @@ import {
   setFolderOpen,
   setLocationList,
 } from "../../store/global-store";
+import PortalModal from "../../components/LocationFormDialog/LocationFormDialog";
 
 const Home: React.FC = () => {
   const {
@@ -21,6 +22,7 @@ const Home: React.FC = () => {
   const dispatch = useDispatch();
   const folderList = useSelector((state: any) => state.global.folderList);
   const folderOpen = useSelector((state: any) => state.global.folderOpen);
+  const [locationFormOpen, setLocationFormOpen] = useState(false);
 
   /**
    * Determine what dialog opens based on the folder parameter.
@@ -33,11 +35,12 @@ const Home: React.FC = () => {
       ) as HTMLDialogElement | null;
       if (folderCreateModal) folderCreateModal.showModal();
     } else {
-      const locationListModal = document.getElementById(
-        "my_modal_2"
-      ) as HTMLDialogElement | null;
-      if (locationListModal) locationListModal.showModal();
+      setLocationFormOpen(true);
     }
+  };
+
+  const closeLocationModal = () => {
+    setLocationFormOpen(false);
   };
 
   const onSubmit = () => {
@@ -100,9 +103,9 @@ const Home: React.FC = () => {
                 >
                   <path
                     stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
                     d="M5 12h14M5 12l4-4m-4 4 4 4"
                   />
                 </svg>
@@ -151,47 +154,16 @@ const Home: React.FC = () => {
           </div>
         </dialog>
         {/* DIALOG TO ADD TO FOLDER*/}
-        <dialog id="my_modal_2" className="modal">
-          <div className="modal-box">
-            <form method="dialog">
-              {/* if there is a button in form, it will close the modal */}
-              <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
-                ✕
-              </button>
-            </form>
-            <h3 className="font-bold text-lg">New Location</h3>
+        {locationFormOpen && (
+          <PortalModal
+            onClose={closeLocationModal}
+            children={undefined}
+          ></PortalModal>
+        )}
 
-            <fieldset className="fieldset">
-              <form onSubmit={handleSubmit(onSubmit)}>
-                <legend className="fieldset-legend">
-                  Etch its name in the black grimoire
-                </legend>
-                <div className="dialog-submit">
-                  <input
-                    {...register("locationList", {
-                      required: false,
-                    })}
-                    type="text"
-                    className={
-                      errors.folderName ? "input input-error" : "input "
-                    }
-                    placeholder="An adventure most unladylike"
-                  />
-                  <button className="btn btn-ghost" type="submit">
-                    Add
-                  </button>
-                </div>
-              </form>
-              <p className="label">
-                A moonlit escapade with mischief in mind and decorum left at
-                home.
-              </p>
-            </fieldset>
-          </div>
-        </dialog>
         {folderList.length > 0 ? (
           folderList.map((folder: { id: string; name: string }) => (
-            <div className="folder">
+            <div className="folder" key={folder.id}>
               <Folder key={folder.id} name={folder.name}></Folder>
             </div>
           ))

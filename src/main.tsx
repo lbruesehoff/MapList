@@ -6,6 +6,8 @@ import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import "./index.css";
+import { APIProvider } from "@vis.gl/react-google-maps";
+const GOOGLE_MAPS_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
 const rootElement = document.getElementById("root");
 if (rootElement) {
@@ -13,7 +15,9 @@ if (rootElement) {
     <StrictMode>
       <BrowserRouter>
         <Provider store={store}>
-          <App />
+          <APIProvider apiKey={GOOGLE_MAPS_API_KEY}>
+            <App />
+          </APIProvider>
         </Provider>
       </BrowserRouter>
     </StrictMode>

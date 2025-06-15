@@ -1,11 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { GlobalState, LocationType } from "./store-interfaces";
+import { GlobalState, LocationMarker, LocationType } from "./store-interfaces";
 
 const initialState: GlobalState = {
   theme: "default",
   folderList: [],
   folderOpen: false,
   locationList: [],
+  locationMarkers: [],
 };
 
 const globalSlice = createSlice({
@@ -33,9 +34,21 @@ const globalSlice = createSlice({
       }
       state.locationList.push(newLocation);
     },
+    addMarker: (state, action: PayloadAction<LocationMarker>) => {
+      const newMarker: LocationMarker = {
+        lat: action.payload.lat,
+        lng: action.payload.lng,
+      };
+      state.locationMarkers.push(newMarker);
+    },
   },
 });
 
-export const { setTheme, addFolder, setFolderOpen, setLocationList } =
-  globalSlice.actions;
+export const {
+  setTheme,
+  addFolder,
+  setFolderOpen,
+  setLocationList,
+  addMarker,
+} = globalSlice.actions;
 export default globalSlice.reducer;
