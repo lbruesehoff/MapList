@@ -87,8 +87,14 @@ const PortalModal: React.FC<PortalModalProps> = ({ onClose, children }) => {
   }, [selectedPlace]);
 
   return ReactDOM.createPortal(
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-      <div className="bg-base-100 rounded-box p-6 relative">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
+      onClick={onClose}
+    >
+      <div
+        className="bg-base-100 rounded-box p-6 relative"
+        onClick={(e) => e.stopPropagation()}
+      >
         <button
           className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
           onClick={onClose}

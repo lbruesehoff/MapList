@@ -18,6 +18,7 @@ const Home: React.FC = () => {
     getValues,
     setError,
     formState: { errors },
+    reset,
   } = useForm();
   const dispatch = useDispatch();
   const folderList = useSelector((state: any) => state.global.folderList);
@@ -39,6 +40,13 @@ const Home: React.FC = () => {
     }
   };
 
+  const closeModal = () => {
+    const modal = document.getElementById(
+      "my_modal_1"
+    ) as HTMLDialogElement | null;
+    if (modal) modal.close();
+  };
+
   const closeLocationModal = () => {
     setLocationFormOpen(false);
   };
@@ -48,6 +56,7 @@ const Home: React.FC = () => {
       dispatch(
         addFolder({ id: Date.now().toString(), name: getValues("folderName") })
       );
+      closeModal();
     } else {
       dispatch(
         setLocationList({
@@ -57,6 +66,7 @@ const Home: React.FC = () => {
         })
       );
     }
+    reset();
   };
   return (
     <div className="list-container">
@@ -115,11 +125,23 @@ const Home: React.FC = () => {
         </div>
 
         {/* DIALOG TO CREATE FOLDER*/}
-        <dialog id="my_modal_1" className="modal">
+        <dialog
+          id="my_modal_1"
+          className="modal"
+          onClick={(e) => {
+            // Close modal if click is outside modal-box
+            if (e.target === e.currentTarget) {
+              (e.currentTarget as HTMLDialogElement).close();
+            }
+          }}
+        >
           <div className="modal-box">
             <form method="dialog">
-              {/* if there is a button in form, it will close the modal */}
-              <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+              <button
+                className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+                type="button"
+                onClick={closeModal}
+              >
                 ✕
               </button>
             </form>
@@ -140,6 +162,7 @@ const Home: React.FC = () => {
                       errors.folderName ? "input input-error" : "input "
                     }
                     placeholder="An adventure most unladylike"
+                    autoComplete="off"
                   />
                   <button className="btn btn-ghost" type="submit">
                     Add

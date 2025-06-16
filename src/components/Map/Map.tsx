@@ -41,11 +41,11 @@ const Map: React.FC = () => {
         <div className="map">
           <GoogleMap
             style={{}}
-            center={
-              markerLocations.length > 0
-                ? { lat: markerLocations[0].lat, lng: markerLocations[0].lng }
-                : userLocation || { lat: 44.9778, lng: -93.265 }
-            }
+            // center={
+            //   markerLocations.length > 0
+            //     ? { lat: markerLocations[0].lat, lng: markerLocations[0].lng }
+            //     : userLocation || { lat: 44.9778, lng: -93.265 }
+            // }
             defaultCenter={
               markerLocations.length > 0
                 ? { lat: markerLocations[0].lat, lng: markerLocations[0].lng }
