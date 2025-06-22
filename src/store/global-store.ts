@@ -1,8 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { GlobalState, LocationMarker, LocationType } from "./store-interfaces";
+import {
+  FolderType,
+  GlobalState,
+  LocationMarker,
+  LocationType,
+} from "./store-interfaces";
 
 const initialState: GlobalState = {
   theme: "default",
+  selectedFolder: { id: "", name: "" },
   folderList: [],
   folderOpen: false,
   locationList: [],
@@ -16,6 +22,10 @@ const globalSlice = createSlice({
     setTheme: (state, action: PayloadAction<boolean>) => {
       state.theme = action.payload ? "dark" : "default";
     },
+    setSelectedFolder: (state, action: PayloadAction<FolderType>) => {
+      const selectedFolder = action.payload;
+      state.selectedFolder = selectedFolder;
+    },
     addFolder: (state, action: PayloadAction<{ id: string; name: string }>) => {
       const { id, name } = action.payload;
       state.folderList.push({ id, name });
@@ -26,6 +36,7 @@ const globalSlice = createSlice({
     setLocationList: (state, action: PayloadAction<LocationType>) => {
       const newLocation: LocationType = {
         id: action.payload.id,
+        folderId: action.payload.folderId,
         name: action.payload.name,
         address: action.payload.address,
       };
@@ -46,6 +57,7 @@ const globalSlice = createSlice({
 
 export const {
   setTheme,
+  setSelectedFolder,
   addFolder,
   setFolderOpen,
   setLocationList,

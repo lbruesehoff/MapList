@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import "./Home.scss";
+import { v4 as uuidv4 } from "uuid";
 import Folder from "../../components/Folder/Folder";
 import Map from "../../components/Map/Map";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,8 +8,10 @@ import {
   addFolder,
   setFolderOpen,
   setLocationList,
+  setSelectedFolder, // Make sure this action exists in your global-store
 } from "../../store/global-store";
 import PortalModal from "../../components/LocationFormDialog/LocationFormDialog";
+import "./Home.scss";
 
 const Home: React.FC = () => {
   const {
@@ -20,9 +22,14 @@ const Home: React.FC = () => {
     formState: { errors },
     reset,
   } = useForm();
+  const folderId = uuidv4();
+  const locationId = uuidv4();
   const dispatch = useDispatch();
   const folderList = useSelector((state: any) => state.global.folderList);
   const folderOpen = useSelector((state: any) => state.global.folderOpen);
+  const selectedFolder = useSelector(
+    (state: any) => state.global.selectedFolder
+  );
   const [locationFormOpen, setLocationFormOpen] = useState(false);
 
   /**
@@ -53,14 +60,13 @@ const Home: React.FC = () => {
 
   const onSubmit = () => {
     if (!folderOpen) {
-      dispatch(
-        addFolder({ id: Date.now().toString(), name: getValues("folderName") })
-      );
+      dispatch(addFolder({ id: folderId, name: getValues("folderName") }));
       closeModal();
     } else {
       dispatch(
         setLocationList({
-          id: Date.now().toString(),
+          id: locationId,
+          folderId: selectedFolder.id,
           name: getValues("locationList"),
           address: "123 Main St, Anytown, USA", // Placeholder address}));
         })
@@ -68,6 +74,7 @@ const Home: React.FC = () => {
     }
     reset();
   };
+
   return (
     <div className="list-container">
       <div className="folder-container">
@@ -186,7 +193,14 @@ const Home: React.FC = () => {
 
         {folderList.length > 0 ? (
           folderList.map((folder: { id: string; name: string }) => (
-            <div className="folder" key={folder.id}>
+            <div
+              className="folder"
+              onClick={() =>
+                dispatch(
+                  setSelectedFolder({ id: folder.id, name: folder.name })
+                )
+              }
+            >
               <Folder key={folder.id} name={folder.name}></Folder>
             </div>
           ))

@@ -4,7 +4,7 @@ import React, { use, useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
 import { useForm } from "react-hook-form";
 import "./LocationFormDialog.scss";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addMarker, setLocationList } from "../../store/global-store";
 
 interface PortalModalProps {
@@ -32,6 +32,10 @@ const PortalModal: React.FC<PortalModalProps> = ({ onClose, children }) => {
     lat: number;
     lng: number;
   } | null>();
+
+  const selectedFolder = useSelector(
+    (state: any) => state.global.selectedFolder
+  );
 
   useEffect(() => {
     if (
@@ -67,6 +71,7 @@ const PortalModal: React.FC<PortalModalProps> = ({ onClose, children }) => {
     dispatch(
       setLocationList({
         id: Date.now().toString(),
+        folderId: selectedFolder.id, // Assuming no folder for now
         name: selectedPlace?.name || "Unnamed Location",
         address: selectedPlace?.formatted_address || "No Address",
       })

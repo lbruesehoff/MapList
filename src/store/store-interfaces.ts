@@ -1,5 +1,6 @@
 export interface GlobalState {
   theme: string; // Theme can be 'default', 'dark', etc.
+  selectedFolder: FolderType;
   folderList: FolderType[]; // List of folders
   folderOpen: boolean; // Indicates if the folder is open
   locationList?: LocationType[]; // Optional list of locations
@@ -12,6 +13,7 @@ export interface FolderType {
 }
 export interface LocationType {
   id: string; // Unique identifier for the location
+  folderId: string; // Optional folder ID if the location belongs to a folder
   name: string; // Name of the location
   address: string; // Address of the location
 }

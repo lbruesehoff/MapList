@@ -1,8 +1,9 @@
-import React, { ReactNode, useState } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import "./Folder.scss";
 import LocationList from "../Location-List/Location-List";
 import { useDispatch, useSelector } from "react-redux";
 import { setFolderOpen } from "../../store/global-store";
+import { LocationType } from "../../store/store-interfaces";
 
 interface FolderProps {
   name?: string;
@@ -13,6 +14,9 @@ const Folder: React.FC<FolderProps> = ({ name, children }) => {
   const dispatch = useDispatch();
   const openFolder = useSelector((state: any) => state.global.folderOpen);
   const locationList = useSelector((state: any) => state.global.locationList);
+  const selectedFolder = useSelector(
+    (state: any) => state.global.selectedFolder
+  );
 
   const toggleFolderOpen = () => {
     dispatch(setFolderOpen(true));
@@ -61,7 +65,14 @@ const Folder: React.FC<FolderProps> = ({ name, children }) => {
         </div>
       ) : (
         <div className="location-list-container">
-          <LocationList locations={locationList}></LocationList>
+          {selectedFolder?.name === name && (
+            <LocationList
+              locations={locationList.filter(
+                (location: LocationType) =>
+                  location.folderId === selectedFolder.id
+              )}
+            />
+          )}
         </div>
       )}
     </div>
