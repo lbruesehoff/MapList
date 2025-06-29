@@ -22,7 +22,13 @@
 .folder {
   margin: 1rem 0;
   cursor: pointer;
-  transition-duration: 500ms;
+  transition: transform 0.5s, opacity 0.5s;
+}
+
+.folder-leave {
+  opacity: 0;
+  transform: translateX(-100%);
+  pointer-events: none;
 }
 
 .folder-back {

@@ -29,6 +29,15 @@ const globalSlice = createSlice({
       const { id, name, locations } = action.payload;
       state.folders.push({ id, name, locations });
     },
+    deleteFolder: (state, action: PayloadAction<string>) => {
+      const folderId = action.payload;
+      state.folders = state.folders.filter((folder) => folder.id !== folderId);
+      // If the deleted folder was the selected folder, reset selectedFolder
+      if (state.selectedFolder.id === folderId) {
+        state.selectedFolder = { id: "", name: "", locations: [] };
+      }
+    },
+    // This action is used to toggle the folder open state
     setFolderOpen: (state, action: PayloadAction<boolean>) => {
       state.folderOpen = action.payload;
     },
@@ -69,6 +78,7 @@ export const {
   setTheme,
   setSelectedFolder,
   addFolder,
+  deleteFolder,
   setFolderOpen,
   setLocationList,
   addMarker,

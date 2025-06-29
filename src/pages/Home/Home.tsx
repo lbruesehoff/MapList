@@ -9,6 +9,7 @@ import {
   setFolderOpen,
   setLocationList,
   setSelectedFolder, // Make sure this action exists in your global-store
+  deleteFolder,
 } from "../../store/global-store";
 import PortalModal from "../../components/LocationFormDialog/LocationFormDialog";
 import "./Home.scss";
@@ -31,6 +32,7 @@ const Home: React.FC = () => {
     (state: any) => state.global.selectedFolder
   );
   const [locationFormOpen, setLocationFormOpen] = useState(false);
+  const [leavingFolderId, setLeavingFolderId] = useState<string | null>(null);
 
   /**
    * Determine what dialog opens based on the folder parameter.
@@ -83,6 +85,22 @@ const Home: React.FC = () => {
       );
     }
     reset();
+  };
+
+  /**
+   * Deletde a folder and update the state.
+   * This function is called when the delete button is clicked on a folder.
+   * It sets a leavingFolderId state to trigger a CSS transition,
+   * then dispatches the deleteFolder action after a delay to allow the transition to complete.
+   * This is to ensure a smooth user experience when removing folders from the UI.
+   * @param folderId
+   */
+  const handleDeleteFolder = (folderId: string) => {
+    setLeavingFolderId(folderId);
+    setTimeout(() => {
+      dispatch(deleteFolder(folderId));
+      setLeavingFolderId(null);
+    }, 500); // Match your CSS transition duration
   };
 
   return (
@@ -204,10 +222,17 @@ const Home: React.FC = () => {
         {folders.length > 0 ? (
           folders.map((folder: { id: string; name: string }) => (
             <div
-              className="folder"
+              key={folder.id}
+              className={`folder${
+                leavingFolderId === folder.id ? " folder-leave" : ""
+              }`}
               onClick={() => dispatch(setSelectedFolder(folder))}
             >
-              <Folder key={folder.id} name={folder.name}></Folder>
+              <Folder
+                name={folder.name}
+                onDelete={() => handleDeleteFolder(folder.id)}
+                isLeaving={leavingFolderId === folder.id}
+              />
             </div>
           ))
         ) : (

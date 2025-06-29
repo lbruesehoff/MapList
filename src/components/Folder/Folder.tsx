@@ -8,9 +8,11 @@ import { FolderType } from "../../store/store-interfaces";
 interface FolderProps {
   name?: string;
   children?: ReactNode;
+  onDelete?: () => void;
+  isLeaving?: boolean;
 }
 
-const Folder: React.FC<FolderProps> = ({ name, children }) => {
+const Folder: React.FC<FolderProps> = ({ name, children, onDelete }) => {
   const dispatch = useDispatch();
   const openFolder = useSelector((state: any) => state.global.folderOpen);
   const folders = useSelector((state: any) => state.global.folders);
@@ -21,6 +23,18 @@ const Folder: React.FC<FolderProps> = ({ name, children }) => {
   const toggleFolderOpen = () => {
     dispatch(setFolderOpen(true));
   };
+
+  /**
+   * Remove the folder and dispatch the deleteFolder action on the parent component.
+   * This function is called when the delete button is clicked.
+   *
+   * @param e
+   */
+  const removeFolder = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (onDelete) onDelete();
+  };
+
   return (
     <div>
       {!openFolder ? (
@@ -43,7 +57,10 @@ const Folder: React.FC<FolderProps> = ({ name, children }) => {
                 </div>
               </div>
 
-              <button className="btn btn-square btn-ghost">
+              <button
+                className="btn btn-square btn-ghost"
+                onClick={removeFolder}
+              >
                 <svg
                   className="size-[1.2em]"
                   xmlns="http://www.w3.org/2000/svg"
