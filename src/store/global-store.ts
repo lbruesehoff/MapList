@@ -8,10 +8,9 @@ import {
 
 const initialState: GlobalState = {
   theme: "default",
-  selectedFolder: { id: "", name: "" },
-  folderList: [],
+  selectedFolder: { id: "", name: "", locations: [] },
+  folders: [],
   folderOpen: false,
-  locationList: [],
   locationMarkers: [],
 };
 
@@ -26,9 +25,9 @@ const globalSlice = createSlice({
       const selectedFolder = action.payload;
       state.selectedFolder = selectedFolder;
     },
-    addFolder: (state, action: PayloadAction<{ id: string; name: string }>) => {
-      const { id, name } = action.payload;
-      state.folderList.push({ id, name });
+    addFolder: (state, action: PayloadAction<FolderType>) => {
+      const { id, name, locations } = action.payload;
+      state.folders.push({ id, name, locations });
     },
     setFolderOpen: (state, action: PayloadAction<boolean>) => {
       state.folderOpen = action.payload;
@@ -40,10 +39,17 @@ const globalSlice = createSlice({
         name: action.payload.name,
         address: action.payload.address,
       };
-      if (!state.locationList) {
-        state.locationList = [];
+
+      // Find the folder by folderId and add the location to its locations array
+      const folder = state.folders.find(
+        (folder) => folder.id === newLocation.folderId
+      );
+      if (folder) {
+        if (!folder.locations) {
+          folder.locations = [];
+        }
+        folder.locations.push(newLocation);
       }
-      state.locationList.push(newLocation);
     },
     addMarker: (state, action: PayloadAction<LocationMarker>) => {
       const newMarker: LocationMarker = {

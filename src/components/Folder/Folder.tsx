@@ -3,7 +3,7 @@ import "./Folder.scss";
 import LocationList from "../Location-List/Location-List";
 import { useDispatch, useSelector } from "react-redux";
 import { setFolderOpen } from "../../store/global-store";
-import { LocationType } from "../../store/store-interfaces";
+import { FolderType } from "../../store/store-interfaces";
 
 interface FolderProps {
   name?: string;
@@ -13,7 +13,7 @@ interface FolderProps {
 const Folder: React.FC<FolderProps> = ({ name, children }) => {
   const dispatch = useDispatch();
   const openFolder = useSelector((state: any) => state.global.folderOpen);
-  const locationList = useSelector((state: any) => state.global.locationList);
+  const folders = useSelector((state: any) => state.global.folders);
   const selectedFolder = useSelector(
     (state: any) => state.global.selectedFolder
   );
@@ -67,10 +67,11 @@ const Folder: React.FC<FolderProps> = ({ name, children }) => {
         <div className="location-list-container">
           {selectedFolder?.name === name && (
             <LocationList
-              locations={locationList.filter(
-                (location: LocationType) =>
-                  location.folderId === selectedFolder.id
-              )}
+              locations={
+                folders
+                  .filter((folder: any) => folder.id === selectedFolder.id)
+                  .map((folder: FolderType) => folder.locations)[0]
+              }
             />
           )}
         </div>

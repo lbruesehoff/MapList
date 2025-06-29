@@ -1,5 +1,6 @@
 import React from "react";
 import "./Location-List.scss"; // Assuming you have some styles for the component
+import { LocationType } from "../../store/store-interfaces";
 
 interface Location {
   id: number;
@@ -8,7 +9,7 @@ interface Location {
 }
 
 interface LocationListProps {
-  locations: Location[];
+  locations: LocationType[];
   onSelect?: (location: Location) => void;
 }
 

@@ -25,7 +25,7 @@ const Home: React.FC = () => {
   const folderId = uuidv4();
   const locationId = uuidv4();
   const dispatch = useDispatch();
-  const folderList = useSelector((state: any) => state.global.folderList);
+  const folders = useSelector((state: any) => state.global.folders);
   const folderOpen = useSelector((state: any) => state.global.folderOpen);
   const selectedFolder = useSelector(
     (state: any) => state.global.selectedFolder
@@ -60,7 +60,13 @@ const Home: React.FC = () => {
 
   const onSubmit = () => {
     if (!folderOpen) {
-      dispatch(addFolder({ id: folderId, name: getValues("folderName") }));
+      dispatch(
+        addFolder({
+          id: folderId,
+          name: getValues("folderName"),
+          locations: [],
+        })
+      );
       closeModal();
     } else {
       dispatch(
@@ -191,8 +197,8 @@ const Home: React.FC = () => {
           ></PortalModal>
         )}
 
-        {folderList.length > 0 ? (
-          folderList.map((folder: { id: string; name: string }) => (
+        {folders.length > 0 ? (
+          folders.map((folder: { id: string; name: string }) => (
             <div
               className="folder"
               onClick={() =>

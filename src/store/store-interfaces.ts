@@ -1,15 +1,15 @@
 export interface GlobalState {
   theme: string; // Theme can be 'default', 'dark', etc.
   selectedFolder: FolderType;
-  folderList: FolderType[]; // List of folders
+  folders: FolderType[]; // List of folders
   folderOpen: boolean; // Indicates if the folder is open
-  locationList?: LocationType[]; // Optional list of locations
   locationMarkers: LocationMarker[]; // Optional list of location markers
 }
 
 export interface FolderType {
   id: string; // Unique identifier for the folder
   name: string; // Name of the folder
+  locations?: LocationType[]; // Optional list of locations within the folder
 }
 export interface LocationType {
   id: string; // Unique identifier for the location
