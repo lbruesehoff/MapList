@@ -10,8 +10,8 @@ import { useSelector } from "react-redux";
 const GOOGLE_MAPS_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
 const Map: React.FC = () => {
-  const markerLocations = useSelector(
-    (state: any) => state.global.locationMarkers
+  const selectedFolder = useSelector(
+    (state: any) => state.global.selectedFolder
   );
   const [userLocation, setUserLocation] = useState<{
     lat: number;
@@ -47,21 +47,27 @@ const Map: React.FC = () => {
             //     : userLocation || { lat: 44.9778, lng: -93.265 }
             // }
             defaultCenter={
-              markerLocations.length > 0
-                ? { lat: markerLocations[0].lat, lng: markerLocations[0].lng }
+              selectedFolder.locations > 0
+                ? {
+                    lat: selectedFolder.locations[0].geoLocation.lat,
+                    lng: selectedFolder.locations[0].geoLocation.lng,
+                  }
                 : userLocation || { lat: 44.9778, lng: -93.265 }
             }
             defaultZoom={10}
             gestureHandling={"greedy"}
             disableDefaultUI={false}
           >
-            {markerLocations.length > 0 &&
-              markerLocations.map((location: any, index: number) => (
+            {selectedFolder.locations.length > 0 &&
+              selectedFolder.locations.map((location: any, index: number) => (
                 <Marker
                   key={index}
-                  position={{ lat: location.lat, lng: location.lng }}
-                  title={location.title || "Marker"}
-                  label={location.label || ""}
+                  position={{
+                    lat: location.geoLocation.lat,
+                    lng: location.geoLocation.lng,
+                  }}
+                  title={location.name || "Marker"}
+                  label={""}
                   onClick={() => {
                     console.log(`Marker ${index} clicked`);
                   }}

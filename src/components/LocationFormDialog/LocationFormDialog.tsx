@@ -74,6 +74,7 @@ const PortalModal: React.FC<PortalModalProps> = ({ onClose, children }) => {
         folderId: selectedFolder.id, // Assuming no folder for now
         name: selectedPlace?.name || "Unnamed Location",
         address: selectedPlace?.formatted_address || "No Address",
+        geoLocation: getValues("location"),
       })
     );
     onClose();

@@ -75,6 +75,10 @@ const Home: React.FC = () => {
           folderId: selectedFolder.id,
           name: getValues("locationList"),
           address: "123 Main St, Anytown, USA", // Placeholder address}));
+          geoLocation: {
+            lat: 0, // Placeholder latitude
+            lng: 0, // Placeholder longitude
+          },
         })
       );
     }
@@ -201,11 +205,7 @@ const Home: React.FC = () => {
           folders.map((folder: { id: string; name: string }) => (
             <div
               className="folder"
-              onClick={() =>
-                dispatch(
-                  setSelectedFolder({ id: folder.id, name: folder.name })
-                )
-              }
+              onClick={() => dispatch(setSelectedFolder(folder))}
             >
               <Folder key={folder.id} name={folder.name}></Folder>
             </div>

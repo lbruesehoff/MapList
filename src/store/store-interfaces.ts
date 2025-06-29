@@ -16,6 +16,7 @@ export interface LocationType {
   folderId: string; // Optional folder ID if the location belongs to a folder
   name: string; // Name of the location
   address: string; // Address of the location
+  geoLocation: LocationMarker; // Optional geographical location of the location
 }
 
 export interface LocationMarker {

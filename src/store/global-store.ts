@@ -38,6 +38,10 @@ const globalSlice = createSlice({
         folderId: action.payload.folderId,
         name: action.payload.name,
         address: action.payload.address,
+        geoLocation: {
+          lat: action.payload.geoLocation.lat,
+          lng: action.payload.geoLocation.lng,
+        },
       };
 
       // Find the folder by folderId and add the location to its locations array
