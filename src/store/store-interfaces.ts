@@ -20,6 +20,7 @@ export interface LocationType {
 }
 
 export interface LocationMarker {
+  id: string; // Optional unique identifier for the marker
   lat: number; // Latitude of the marker
   lng: number; // Longitude of the marker
 }

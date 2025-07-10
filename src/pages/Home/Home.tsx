@@ -25,6 +25,7 @@ const Home: React.FC = () => {
   } = useForm();
   const folderId = uuidv4();
   const locationId = uuidv4();
+  const geoLocationId = uuidv4();
   const dispatch = useDispatch();
   const folders = useSelector((state: any) => state.global.folders);
   const folderOpen = useSelector((state: any) => state.global.folderOpen);
@@ -78,6 +79,7 @@ const Home: React.FC = () => {
           name: getValues("locationList"),
           address: "123 Main St, Anytown, USA", // Placeholder address}));
           geoLocation: {
+            id: geoLocationId, // Unique identifier for the location marker
             lat: 0, // Placeholder latitude
             lng: 0, // Placeholder longitude
           },

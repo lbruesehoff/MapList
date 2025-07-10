@@ -48,6 +48,7 @@ const globalSlice = createSlice({
         name: action.payload.name,
         address: action.payload.address,
         geoLocation: {
+          id: action.payload.id,
           lat: action.payload.geoLocation.lat,
           lng: action.payload.geoLocation.lng,
         },
@@ -66,10 +67,27 @@ const globalSlice = createSlice({
     },
     addMarker: (state, action: PayloadAction<LocationMarker>) => {
       const newMarker: LocationMarker = {
+        id: action.payload.id,
         lat: action.payload.lat,
         lng: action.payload.lng,
       };
       state.locationMarkers.push(newMarker);
+    },
+    deleteLocation: (state, action: PayloadAction<LocationType>) => {
+      const locationToDelete = action.payload;
+      // Remove the location from the selected folder's locations
+      const folder = state.folders.find(
+        (folder) => folder.id === locationToDelete.folderId
+      );
+      if (folder && folder.locations) {
+        folder.locations = folder.locations.filter(
+          (location) => location.id !== locationToDelete.id
+        );
+      }
+      // Optionally, remove the marker if it exists in the markers list
+      state.locationMarkers = state.locationMarkers.filter(
+        (marker) => marker.id !== locationToDelete.geoLocation.id
+      );
     },
   },
 });
@@ -82,5 +100,6 @@ export const {
   setFolderOpen,
   setLocationList,
   addMarker,
+  deleteLocation,
 } = globalSlice.actions;
 export default globalSlice.reducer;

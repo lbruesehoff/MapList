@@ -1,6 +1,8 @@
 import React from "react";
 import "./Location-List.scss"; // Assuming you have some styles for the component
 import { LocationType } from "../../store/store-interfaces";
+import { useDispatch } from "react-redux";
+import { deleteLocation } from "../../store/global-store";
 
 interface Location {
   id: number;
@@ -14,6 +16,10 @@ interface LocationListProps {
 }
 
 const LocationList: React.FC<LocationListProps> = ({ locations, onSelect }) => {
+  const dispatch = useDispatch();
+  const deleteLocationMarker = (location: LocationType) => {
+    dispatch(deleteLocation(location));
+  };
   return (
     <ul>
       {locations.length > 0 ? (
@@ -42,23 +48,26 @@ const LocationList: React.FC<LocationListProps> = ({ locations, onSelect }) => {
                   {location.address}
                 </div>
               </div>
-              {/* <button className="btn btn-square btn-ghost">
-              <svg
-                className="size-[1.2em]"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
+              <button
+                className="btn btn-square btn-ghost"
+                onClick={() => deleteLocationMarker(location)}
               >
-                <g
-                  strokeLinejoin="round"
-                  strokeLinecap="round"
-                  strokeWidth="2"
-                  fill="none"
-                  stroke="currentColor"
+                <svg
+                  className="size-[1.2em]"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
                 >
-                  <path d="M6 3L20 12 6 21 6 3z"></path>
-                </g>
-              </svg>
-            </button> */}
+                  <g
+                    strokeLinejoin="round"
+                    strokeLinecap="round"
+                    strokeWidth="2"
+                    fill="none"
+                    stroke="currentColor"
+                  >
+                    <path d="M6 3L20 12 6 21 6 3z"></path>
+                  </g>
+                </svg>
+              </button>
             </li>
           </ul>
         ))
