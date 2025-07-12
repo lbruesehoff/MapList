@@ -1,0 +1,31 @@
+.location-container {
+  display: flex;
+  flex-direction: column;
+  animation: slideInLeft 500ms ease-in;
+
+  @keyframes slideInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-100px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+}
+
+.slide-out-left {
+  animation: slideOutLeft 0.4s forwards;
+}
+
+@keyframes slideOutLeft {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+}
