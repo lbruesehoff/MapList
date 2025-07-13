@@ -1,6 +1,6 @@
 .login-page {
   display: flex;
-  height: 100vh;
+  height: 100dvh;
 }
 
 .login-title {
@@ -59,4 +59,31 @@
   color: #007bff;
   text-decoration: none;
   font-size: 0.75rem;
+}
+
+@media screen and (max-width: 768px) {
+  .login-page {
+    flex-direction: column-reverse;
+    justify-content: flex-end;
+  }
+
+  .login-title {
+  }
+
+  .login-form-container {
+    width: 100%;
+    height: 60%;
+  }
+
+  .login-image-container {
+    width: auto;
+    height: 20%;
+    margin: 1rem;
+    border-radius: 20px;
+    background-position: center top; // Moves the background image up
+  }
+
+  .login-form {
+    width: 90%;
+  }
 }
