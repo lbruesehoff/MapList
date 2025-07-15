@@ -1,0 +1,89 @@
+.sign-up-page {
+  display: flex;
+  height: 100dvh;
+}
+
+.sign-up-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.sign-up-form {
+  width: 50%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.sign-up-form {
+  label {
+    width: 100%;
+  }
+}
+
+.sign-up-form-container {
+  width: 60%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.sign-up-image-container {
+  width: 40%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: url("../../assets/images/login-map.png") center center/cover
+    no-repeat;
+  // height: 100vh;
+  border-radius: 20px;
+  margin: 2rem;
+}
+
+.link-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.forgot-password-link {
+  color: #007bff;
+  text-decoration: none;
+  font-size: 0.75rem;
+}
+
+.sign-up-link {
+  color: #007bff;
+  text-decoration: none;
+  font-size: 0.75rem;
+}
+
+@media screen and (max-width: 768px) {
+  .sign-up-page {
+    flex-direction: column-reverse;
+    justify-content: flex-end;
+  }
+
+  .sign-up-title {
+  }
+
+  .sign-up-form-container {
+    width: 100%;
+    height: 60%;
+  }
+
+  .sign-up-image-container {
+    width: auto;
+    height: 20%;
+    margin: 1rem;
+    border-radius: 20px;
+    background-position: center top; // Moves the background image up
+  }
+
+  .sign-up-form {
+    width: 90%;
+  }
+}
