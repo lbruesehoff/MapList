@@ -56,7 +56,7 @@ const Map: React.FC = () => {
             }
             defaultZoom={10}
             gestureHandling={"greedy"}
-            disableDefaultUI={false}
+            disableDefaultUI={true}
           >
             {selectedFolder.locations.length > 0 &&
               selectedFolder.locations.map((location: any, index: number) => (

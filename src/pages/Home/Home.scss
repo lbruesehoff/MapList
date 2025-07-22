@@ -43,13 +43,22 @@
 }
 .map-container {
 }
+.map-container-folder {
+}
 
-@media (max-width: 800px) {
+@media (max-width: 768px) {
   .list-container {
     flex-direction: column;
-    padding: 10px;
   }
   .folder-container {
     width: 100%;
+  }
+
+  .folder {
+    margin-bottom: 3rem;
+  }
+
+  .map-container-folder {
+    display: none;
   }
 }

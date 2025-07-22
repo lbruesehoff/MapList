@@ -185,7 +185,7 @@ const Home: React.FC = () => {
             <h3 className="font-bold text-lg">New Map List</h3>
 
             <fieldset className="fieldset">
-              <form onSubmit={handleSubmit(onSubmit)}>
+              <form onSubmit={handleSubmit(onSubmit)} className="folder-form">
                 <legend className="fieldset-legend">
                   Etch its name in the black grimoire
                 </legend>
@@ -206,9 +206,8 @@ const Home: React.FC = () => {
                   </button>
                 </div>
               </form>
-              <p className="label">
-                A moonlit escapade with mischief in mind and decorum left at
-                home.
+              <p className="label desc">
+                Mischief in mind and decorum left at home.
               </p>
             </fieldset>
           </div>
@@ -246,7 +245,7 @@ const Home: React.FC = () => {
           </div>
         )}
       </div>
-      <div className="map-container">
+      <div className={folderOpen ? "map-container" : "map-container-folder"}>
         <Map />
       </div>
     </div>
