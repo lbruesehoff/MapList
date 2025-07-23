@@ -34,6 +34,7 @@ const Home: React.FC = () => {
   );
   const [locationFormOpen, setLocationFormOpen] = useState(false);
   const [leavingFolderId, setLeavingFolderId] = useState<string | null>(null);
+  const [listView, setListView] = useState(true);
 
   /**
    * Determine what dialog opens based on the folder parameter.
@@ -133,6 +134,16 @@ const Home: React.FC = () => {
               </svg>
             </button>
           </div>
+          {folderOpen && (
+            <ul className="menu menu-horizontal bg-base-200 views">
+              <li onClick={() => setListView(false)}>
+                <a className={!listView ? "menu-active" : ""}>Map View</a>
+              </li>
+              <li onClick={() => setListView(true)}>
+                <a className={listView ? "menu-active" : ""}>List View</a>
+              </li>
+            </ul>
+          )}
           {folderOpen && (
             <div className="folder-back">
               <button
@@ -246,7 +257,7 @@ const Home: React.FC = () => {
         )}
       </div>
       <div className={folderOpen ? "map-container" : "map-container-folder"}>
-        <Map />
+        {!listView && <Map />}
       </div>
     </div>
   );

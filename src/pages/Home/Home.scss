@@ -35,6 +35,9 @@
   width: 3rem;
   height: 3rem;
 }
+.views {
+  display: none;
+}
 
 .folder:hover {
   cursor: pointer;
@@ -54,8 +57,21 @@
     width: 100%;
   }
 
+  .buttons {
+    align-items: center;
+  }
+
   .folder {
     margin-bottom: 3rem;
+  }
+
+  .add-folder {
+    display: flex;
+  }
+
+  .views {
+    padding-top: 1rem;
+    display: contents;
   }
 
   .map-container-folder {
