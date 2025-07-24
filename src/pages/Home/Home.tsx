@@ -13,6 +13,7 @@ import {
 } from "../../store/global-store";
 import PortalModal from "../../components/LocationFormDialog/LocationFormDialog";
 import "./Home.scss";
+import { useWindowSize } from "../../hooks/useWindowSize";
 
 const Home: React.FC = () => {
   const {
@@ -35,6 +36,7 @@ const Home: React.FC = () => {
   const [locationFormOpen, setLocationFormOpen] = useState(false);
   const [leavingFolderId, setLeavingFolderId] = useState<string | null>(null);
   const [listView, setListView] = useState(true);
+  const { width, height } = useWindowSize();
 
   /**
    * Determine what dialog opens based on the folder parameter.
@@ -230,29 +232,33 @@ const Home: React.FC = () => {
             children={undefined}
           ></PortalModal>
         )}
-
-        {folders.length > 0 ? (
-          folders.map((folder: { id: string; name: string }) => (
-            <div
-              key={folder.id}
-              className={`folder${
-                leavingFolderId === folder.id ? " folder-leave" : ""
-              }`}
-              onClick={() => dispatch(setSelectedFolder(folder))}
-            >
-              <Folder
-                name={folder.name}
-                onDelete={() => handleDeleteFolder(folder.id)}
-                isLeaving={leavingFolderId === folder.id}
-              />
-            </div>
-          ))
-        ) : (
-          <div role="alert" className="alert alert-info alert-soft">
-            <span>
-              No sigil, no name, no spark — will you craft one, or let the
-              silence claim your purpose?
-            </span>
+        {/* LISTS OF LOCATIONS */}
+        {listView && (
+          <div>
+            {folders.length > 0 ? (
+              folders.map((folder: { id: string; name: string }) => (
+                <div
+                  key={folder.id}
+                  className={`folder${
+                    leavingFolderId === folder.id ? " folder-leave" : ""
+                  }`}
+                  onClick={() => dispatch(setSelectedFolder(folder))}
+                >
+                  <Folder
+                    name={folder.name}
+                    onDelete={() => handleDeleteFolder(folder.id)}
+                    isLeaving={leavingFolderId === folder.id}
+                  />
+                </div>
+              ))
+            ) : (
+              <div role="alert" className="alert alert-info alert-soft">
+                <span>
+                  No sigil, no name, no spark — will you craft one, or let the
+                  silence claim your purpose?
+                </span>
+              </div>
+            )}
           </div>
         )}
       </div>
