@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import Folder from "../../components/Folder/Folder";
 import Map from "../../components/Map/Map";
@@ -28,6 +28,7 @@ const Home: React.FC = () => {
   const locationId = uuidv4();
   const geoLocationId = uuidv4();
   const dispatch = useDispatch();
+  const mobileViewWidth = 768; // Define your mobile view width
   const folders = useSelector((state: any) => state.global.folders);
   const folderOpen = useSelector((state: any) => state.global.folderOpen);
   const selectedFolder = useSelector(
@@ -36,8 +37,11 @@ const Home: React.FC = () => {
   const [locationFormOpen, setLocationFormOpen] = useState(false);
   const [leavingFolderId, setLeavingFolderId] = useState<string | null>(null);
   const [listView, setListView] = useState(true);
-  const { width, height } = useWindowSize();
+  const { screenWidth, screenHeight } = useWindowSize();
 
+  useEffect(() => {
+    setListView(true); // Reset to list view on screen size change
+  }, [screenWidth]);
   /**
    * Determine what dialog opens based on the folder parameter.
    * @param folder
@@ -263,7 +267,7 @@ const Home: React.FC = () => {
         )}
       </div>
       <div className={folderOpen ? "map-container" : "map-container-folder"}>
-        {!listView && <Map />}
+        {(!listView || screenWidth > mobileViewWidth) && <Map />}
       </div>
     </div>
   );
