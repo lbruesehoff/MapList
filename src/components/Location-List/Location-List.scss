@@ -29,3 +29,9 @@
     transform: translateX(-100px);
   }
 }
+
+@media screen and (max-width: 768px) {
+  .no-locations {
+    margin: 2rem 0 0 0;
+  }
+}

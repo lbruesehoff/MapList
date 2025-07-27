@@ -60,13 +60,26 @@
   .buttons {
     align-items: center;
   }
+  .no-folders {
+    margin: 1rem 0 0 0;
+  }
 
   .folder {
     margin-bottom: 3rem;
   }
 
+  .add-folder-button {
+  }
+
   .add-folder {
     display: flex;
+    margin: 0;
+    align-self: auto;
+  }
+
+  .folder-back {
+    width: auto;
+    height: auto;
   }
 
   .views {

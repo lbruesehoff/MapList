@@ -118,26 +118,10 @@ const Home: React.FC = () => {
         <div className="buttons">
           <div className="add-folder">
             <button
-              className="btn btn-circle add-folder-button"
+              className="btn btn-active btn-primary add-folder-button"
               onClick={() => openModal(folderOpen)}
             >
-              <svg
-                className="w-6 h-6 text-gray-800 dark:text-white fill-primary"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                width="35"
-                height="35"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="1.5"
-                  d="M12 7.757v8.486M7.757 12h8.486M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                />
-              </svg>
+              add
             </button>
           </div>
           {folderOpen && (
@@ -153,26 +137,10 @@ const Home: React.FC = () => {
           {folderOpen && (
             <div className="folder-back">
               <button
-                className="btn btn-circle add-folder-button"
+                className="btn btn-active btn-primary "
                 onClick={() => dispatch(setFolderOpen(false))}
               >
-                <svg
-                  className="w-6 h-6 red dark:text-blue fill-secondary"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M5 12h14M5 12l4-4m-4 4 4 4"
-                  />
-                </svg>
+                back
               </button>
             </div>
           )}
@@ -256,11 +224,11 @@ const Home: React.FC = () => {
                 </div>
               ))
             ) : (
-              <div role="alert" className="alert alert-info alert-soft">
-                <span>
-                  No sigil, no name, no spark — will you craft one, or let the
-                  silence claim your purpose?
-                </span>
+              <div
+                role="alert"
+                className="alert alert-info alert-soft no-folders"
+              >
+                <span>Why do you have no folders..?</span>
               </div>
             )}
           </div>

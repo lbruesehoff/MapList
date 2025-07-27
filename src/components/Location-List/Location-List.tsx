@@ -82,11 +82,11 @@ const LocationList: React.FC<LocationListProps> = ({ locations, onSelect }) => {
             </ul>
           ))
         ) : (
-          <div role="alert" className="alert alert-info alert-soft">
-            <span>
-              No sigil, no name, no spark — will you craft one, or let the
-              silence claim your purpose?
-            </span>
+          <div
+            role="alert"
+            className="alert alert-info alert-soft no-locations"
+          >
+            <span>You have 0 locations.. why?</span>
           </div>
         )}
       </ul>
