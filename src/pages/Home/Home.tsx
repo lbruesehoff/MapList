@@ -218,6 +218,7 @@ const Home: React.FC = () => {
                 >
                   <Folder
                     name={folder.name}
+                    id={folder.id}
                     onDelete={() => handleDeleteFolder(folder.id)}
                     isLeaving={leavingFolderId === folder.id}
                   />
@@ -228,7 +229,10 @@ const Home: React.FC = () => {
                 role="alert"
                 className="alert alert-info alert-soft no-folders"
               >
-                <span>Why do you have no folders..?</span>
+                <span>
+                  Begin by creating a folder for your adventure. The Old Ones
+                  demand structure before madness...
+                </span>
               </div>
             )}
           </div>

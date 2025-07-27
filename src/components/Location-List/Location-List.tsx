@@ -86,7 +86,10 @@ const LocationList: React.FC<LocationListProps> = ({ locations, onSelect }) => {
             role="alert"
             className="alert alert-info alert-soft no-locations"
           >
-            <span>You have 0 locations.. why?</span>
+            <span>
+              Now, populate the folder with locations. The Old Ones require
+              offerings one pin at a time...
+            </span>
           </div>
         )}
       </ul>

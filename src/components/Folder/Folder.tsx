@@ -7,12 +7,13 @@ import { FolderType } from "../../store/store-interfaces";
 
 interface FolderProps {
   name?: string;
+  id?: string;
   children?: ReactNode;
   onDelete?: () => void;
   isLeaving?: boolean;
 }
 
-const Folder: React.FC<FolderProps> = ({ name, children, onDelete }) => {
+const Folder: React.FC<FolderProps> = ({ name, id, children, onDelete }) => {
   const dispatch = useDispatch();
   const openFolder = useSelector((state: any) => state.global.folderOpen);
   const folders = useSelector((state: any) => state.global.folders);
@@ -40,7 +41,7 @@ const Folder: React.FC<FolderProps> = ({ name, children, onDelete }) => {
       {!openFolder ? (
         <div className="folder-component-container">
           <ul
-            className="list bg-base-100 rounded-box shadow-md"
+            className="list bg-primary bg-base-100 rounded-box shadow-md"
             onClick={toggleFolderOpen}
           >
             <li className="list-row">
@@ -51,8 +52,8 @@ const Folder: React.FC<FolderProps> = ({ name, children, onDelete }) => {
                 />
               </div>
               <div>
-                <div>{name}</div>
-                <div className="text-xs uppercase font-semibold opacity-60">
+                <div className="text-primary-content">{name}</div>
+                <div className="text-primary-content text-xs uppercase font-semibold opacity-60">
                   Folder
                 </div>
               </div>
@@ -82,7 +83,7 @@ const Folder: React.FC<FolderProps> = ({ name, children, onDelete }) => {
         </div>
       ) : (
         <div className="location-list-container">
-          {selectedFolder?.name === name && (
+          {selectedFolder?.id === id && (
             <LocationList
               locations={
                 folders
