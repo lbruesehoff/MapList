@@ -33,7 +33,7 @@ const LocationList: React.FC<LocationListProps> = ({ locations, onSelect }) => {
         {locations.length > 0 ? (
           locations.map((location, index) => (
             <ul
-              className={`list bg-base-100 rounded-box shadow-md location-container${
+              className={`list bg-primary bg-base-100 rounded-box shadow-md location-container${
                 removingId === location.id ? " slide-out-left" : ""
               }`}
               key={location.id}
@@ -43,7 +43,7 @@ const LocationList: React.FC<LocationListProps> = ({ locations, onSelect }) => {
           </li> */}
 
               <li className="list-row">
-                <div className="text-4xl font-thin opacity-30 tabular-nums">
+                <div className="text-primary-content text-4xl font-thin opacity-30 tabular-nums">
                   {index + 1}
                 </div>
                 <div>
@@ -53,8 +53,8 @@ const LocationList: React.FC<LocationListProps> = ({ locations, onSelect }) => {
                   />
                 </div>
                 <div className="list-col-grow">
-                  <div>{location.name}</div>
-                  <div className="text-xs uppercase font-semibold opacity-60">
+                  <div className="text-primary-content">{location.name}</div>
+                  <div className="text-primary-content text-xs uppercase font-semibold opacity-60">
                     {location.address}
                   </div>
                 </div>

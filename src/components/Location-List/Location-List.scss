@@ -1,6 +1,7 @@
 .location-container {
   display: flex;
   flex-direction: column;
+  margin-bottom: 1rem;
   animation: slideInLeft 500ms ease-in;
 
   @keyframes slideInLeft {
