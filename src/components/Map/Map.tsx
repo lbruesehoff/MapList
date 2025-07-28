@@ -46,22 +46,22 @@ const Map: React.FC = () => {
             //     ? { lat: markerLocations[0].lat, lng: markerLocations[0].lng }
             //     : userLocation || { lat: 44.9778, lng: -93.265 }
             // }
-            defaultCenter={
-              selectedFolder.locations > 0
-                ? {
-                    lat: selectedFolder.locations[0].geoLocation.lat,
-                    lng: selectedFolder.locations[0].geoLocation.lng,
-                  }
-                : userLocation || { lat: 44.9778, lng: -93.265 }
-            }
-            defaultZoom={10}
+            // center={
+            //   selectedFolder.locations > 0
+            //     ? {
+            //         lat: selectedFolder.locations[0].geoLocation.lat,
+            //         lng: selectedFolder.locations[0].geoLocation.lng,
+            //       }
+            //     : userLocation || { lat: 44.9778, lng: -93.265 }
+            // }
+            // zoom={10}
             gestureHandling={"greedy"}
             disableDefaultUI={true}
           >
             {selectedFolder.locations.length > 0 &&
               selectedFolder.locations.map((location: any, index: number) => (
                 <Marker
-                  key={index}
+                  key={index || location.id}
                   position={{
                     lat: location.geoLocation.lat,
                     lng: location.geoLocation.lng,

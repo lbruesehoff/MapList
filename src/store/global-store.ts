@@ -63,6 +63,7 @@ const globalSlice = createSlice({
           folder.locations = [];
         }
         folder.locations.push(newLocation);
+        state.selectedFolder = folder; // Update selectedFolder to the folder containing the new location
       }
     },
     addMarker: (state, action: PayloadAction<LocationMarker>) => {

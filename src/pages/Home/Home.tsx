@@ -57,6 +57,11 @@ const Home: React.FC = () => {
     }
   };
 
+  const backButton = () => {
+    dispatch(setFolderOpen(false));
+    setListView(true);
+  };
+
   const closeModal = () => {
     const modal = document.getElementById(
       "my_modal_1"
@@ -138,7 +143,7 @@ const Home: React.FC = () => {
             <div className="folder-back">
               <button
                 className="btn btn-active btn-primary "
-                onClick={() => dispatch(setFolderOpen(false))}
+                onClick={backButton}
               >
                 back
               </button>
