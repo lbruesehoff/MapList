@@ -65,15 +65,15 @@ const Map: React.FC = () => {
         <div className="map">
           <GoogleMap
             style={{}}
-            // defaultZoom={13}
-            // center={
-            //   selectedFolder.locations && selectedFolder.locations.length > 0
-            //     ? {
-            //         lat: selectedFolder.locations[0].geoLocation.lat,
-            //         lng: selectedFolder.locations[0].geoLocation.lng,
-            //       }
-            //     : userLocation || { lat: 44.9778, lng: -93.265 }
-            // }
+            defaultZoom={13}
+            defaultCenter={
+              selectedFolder.locations && selectedFolder.locations.length > 0
+                ? {
+                    lat: selectedFolder.locations[0].geoLocation.lat,
+                    lng: selectedFolder.locations[0].geoLocation.lng,
+                  }
+                : userLocation || { lat: 44.9778, lng: -93.265 }
+            }
             gestureHandling={"greedy"}
             disableDefaultUI={true}
             draggable={true}
