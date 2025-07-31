@@ -2,12 +2,36 @@ import {
   APIProvider,
   Map as GoogleMap,
   Marker,
+  useMap,
 } from "@vis.gl/react-google-maps";
 import React, { useEffect, useRef, useState } from "react";
 import "./Map.scss";
 import { useSelector } from "react-redux";
 
 const GOOGLE_MAPS_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+
+const FitBounds: React.FC<{ locations: any[] }> = ({ locations }) => {
+  const map = useMap();
+
+  useEffect(() => {
+    if (map && locations && locations.length > 0) {
+      const bounds = new window.google.maps.LatLngBounds();
+      locations.forEach((location: any) => {
+        bounds.extend({
+          lat: location.geoLocation.lat,
+          lng: location.geoLocation.lng,
+        });
+      });
+
+      map.fitBounds(bounds);
+
+      const currentZoom = map.getZoom();
+      map.setZoom(locations.length < 2 ? currentZoom - 5 : currentZoom - 1);
+    }
+  }, [map, locations]);
+
+  return null;
+};
 
 const Map: React.FC = () => {
   const selectedFolder = useSelector(
@@ -41,23 +65,20 @@ const Map: React.FC = () => {
         <div className="map">
           <GoogleMap
             style={{}}
+            // defaultZoom={13}
             // center={
-            //   markerLocations.length > 0
-            //     ? { lat: markerLocations[0].lat, lng: markerLocations[0].lng }
-            //     : userLocation || { lat: 44.9778, lng: -93.265 }
-            // }
-            // center={
-            //   selectedFolder.locations > 0
+            //   selectedFolder.locations && selectedFolder.locations.length > 0
             //     ? {
             //         lat: selectedFolder.locations[0].geoLocation.lat,
             //         lng: selectedFolder.locations[0].geoLocation.lng,
             //       }
             //     : userLocation || { lat: 44.9778, lng: -93.265 }
             // }
-            // zoom={10}
             gestureHandling={"greedy"}
             disableDefaultUI={true}
+            draggable={true}
           >
+            <FitBounds locations={selectedFolder.locations || []} />
             {selectedFolder.locations.length > 0 &&
               selectedFolder.locations.map((location: any, index: number) => (
                 <Marker

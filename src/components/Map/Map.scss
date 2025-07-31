@@ -8,6 +8,7 @@
 
 .map-container {
   opacity: 0;
+  pointer-events: auto; // Ensure pointer events are enabled
   animation: fadeInMap 1s ease-in forwards;
 }
 

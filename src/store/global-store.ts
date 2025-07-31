@@ -89,6 +89,13 @@ const globalSlice = createSlice({
       state.locationMarkers = state.locationMarkers.filter(
         (marker) => marker.id !== locationToDelete.geoLocation.id
       );
+
+      // If the deleted location was in the selected folder, update the selectedFolder
+      if (state.selectedFolder.locations) {
+        state.selectedFolder.locations = state.selectedFolder.locations.filter(
+          (location) => location.id !== locationToDelete.id
+        );
+      }
     },
   },
 });
