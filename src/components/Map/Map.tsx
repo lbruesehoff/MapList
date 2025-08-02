@@ -7,6 +7,8 @@ import {
 import React, { useEffect, useRef, useState } from "react";
 import "./Map.scss";
 import { useSelector } from "react-redux";
+import { mapStyles } from "./MapStyles";
+import { MapStyleTypes } from "./Map-Types";
 
 const GOOGLE_MAPS_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
@@ -37,10 +39,15 @@ const Map: React.FC = () => {
   const selectedFolder = useSelector(
     (state: any) => state.global.selectedFolder
   );
+  const getTheme = useSelector((state: any) => state.global.theme);
+
   const [userLocation, setUserLocation] = useState<{
     lat: number;
     lng: number;
   } | null>(null);
+  const [mapStyle, setMapStyle] = useState<MapStyleTypes>(MapStyleTypes.Light);
+
+  useEffect(() => {}, [getTheme]);
 
   useEffect(() => {
     if ("geolocation" in navigator) {
@@ -64,7 +71,7 @@ const Map: React.FC = () => {
       <APIProvider apiKey={GOOGLE_MAPS_API_KEY}>
         <div className="map">
           <GoogleMap
-            style={{}}
+            styles={mapStyles(getTheme)}
             defaultZoom={13}
             defaultCenter={
               selectedFolder.locations && selectedFolder.locations.length > 0

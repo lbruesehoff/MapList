@@ -1,9 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
+import { set } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { setTheme } from "../../store/global-store";
 
 const Navbar: React.FC = () => {
+  const dispatch = useDispatch();
   const handleThemeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedTheme = event.target.value;
-    document.documentElement.setAttribute("data-theme", selectedTheme);
+
+    dispatch(setTheme(selectedTheme));
+    document.documentElement.setAttribute("data-theme", event.target.value);
   };
   return (
     <div className="navbar bg-base-100 shadow-sm">

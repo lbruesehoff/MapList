@@ -18,8 +18,8 @@ const globalSlice = createSlice({
   name: "global",
   initialState,
   reducers: {
-    setTheme: (state, action: PayloadAction<boolean>) => {
-      state.theme = action.payload ? "dark" : "default";
+    setTheme: (state, action: PayloadAction<string>) => {
+      state.theme = action.payload;
     },
     setSelectedFolder: (state, action: PayloadAction<FolderType>) => {
       const selectedFolder = action.payload;
