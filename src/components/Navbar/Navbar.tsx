@@ -104,8 +104,8 @@ const Navbar: React.FC = () => {
                 type="radio"
                 name="theme-dropdown"
                 className="theme-controller w-full btn btn-sm btn-block btn-ghost justify-start"
-                aria-label="Valentine"
-                value="valentine"
+                aria-label="Black"
+                value="black"
                 onChange={handleThemeChange}
               />
             </li>
@@ -116,6 +116,16 @@ const Navbar: React.FC = () => {
                 className="theme-controller w-full btn btn-sm btn-block btn-ghost justify-start"
                 aria-label="Forest"
                 value="forest"
+                onChange={handleThemeChange}
+              />
+            </li>
+            <li>
+              <input
+                type="radio"
+                name="theme-dropdown"
+                className="theme-controller w-full btn btn-sm btn-block btn-ghost justify-start"
+                aria-label="Nord"
+                value="nord"
                 onChange={handleThemeChange}
               />
             </li>

@@ -45,9 +45,6 @@ const Map: React.FC = () => {
     lat: number;
     lng: number;
   } | null>(null);
-  const [mapStyle, setMapStyle] = useState<MapStyleTypes>(MapStyleTypes.Light);
-
-  useEffect(() => {}, [getTheme]);
 
   useEffect(() => {
     if ("geolocation" in navigator) {
