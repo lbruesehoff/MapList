@@ -82,11 +82,8 @@ const LocationList: React.FC<LocationListProps> = ({ locations, onSelect }) => {
             </ul>
           ))
         ) : (
-          <div
-            role="alert"
-            className="alert alert-info alert-soft no-locations"
-          >
-            <span>
+          <div role="alert" className="alert alert-info no-locations">
+            <span className="text-primary-content">
               Now, populate the folder with locations. The Old Ones require
               offerings one pin at a time...
             </span>

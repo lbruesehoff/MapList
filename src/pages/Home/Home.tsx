@@ -230,10 +230,7 @@ const Home: React.FC = () => {
                 </div>
               ))
             ) : (
-              <div
-                role="alert"
-                className="alert alert-info alert-soft no-folders"
-              >
+              <div role="alert" className="alert alert-info no-folders">
                 <span>
                   Begin by creating a folder for your adventure. The Old Ones
                   demand structure before madness...
