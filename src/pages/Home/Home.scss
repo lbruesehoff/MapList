@@ -19,10 +19,18 @@
   overflow: auto;
 }
 
+.folder-modal {
+  width: 30%;
+}
+
 .folder {
   margin: 1rem 0;
   cursor: pointer;
   transition: transform 0.5s, opacity 0.5s;
+}
+
+.new-folder-text {
+  margin-left: 0.5rem;
 }
 
 .folder-leave {
@@ -44,6 +52,21 @@
   // margin: 1.025rem;
   // transition-duration: 500ms;
 }
+
+.dialog-submit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  input {
+    width: 100%;
+    margin-top: 1rem;
+  }
+}
+
+.folder-submit-button {
+  width: 100%;
+}
 .map-container {
 }
 .map-container-folder {
@@ -55,6 +78,9 @@
   }
   .folder-container {
     width: 100%;
+  }
+  .folder-modal {
+    width: 75%;
   }
 
   .buttons {
@@ -73,7 +99,7 @@
 
   .add-folder {
     display: flex;
-    margin: 0;
+    margin: 0.25rem 0.25rem 1rem 0;
     align-self: auto;
   }
 

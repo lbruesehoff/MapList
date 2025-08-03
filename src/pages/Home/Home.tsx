@@ -162,7 +162,7 @@ const Home: React.FC = () => {
             }
           }}
         >
-          <div className="modal-box">
+          <div className="modal-box folder-modal">
             <form method="dialog">
               <button
                 className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
@@ -172,34 +172,33 @@ const Home: React.FC = () => {
                 ✕
               </button>
             </form>
-            <h3 className="font-bold text-lg">New Map List</h3>
+            <h3 className="font-bold text-lg new-folder-text">New Folder</h3>
 
-            <fieldset className="fieldset">
-              <form onSubmit={handleSubmit(onSubmit)} className="folder-form">
-                <legend className="fieldset-legend">
-                  Etch its name in the black grimoire
-                </legend>
-                <div className="dialog-submit">
-                  <input
-                    {...register("folderName", {
-                      required: true,
-                    })}
-                    type="text"
-                    className={
-                      errors.folderName ? "input input-error" : "input "
-                    }
-                    placeholder="An adventure most unladylike"
-                    autoComplete="off"
-                  />
-                  <button className="btn btn-ghost" type="submit">
-                    Add
-                  </button>
-                </div>
-              </form>
-              <p className="label desc">
+            {/* <fieldset className="fieldset"> */}
+            <form onSubmit={handleSubmit(onSubmit)} className="folder-form">
+              {/* <legend className="fieldset-legend">Name</legend> */}
+              <div className="dialog-submit">
+                <input
+                  {...register("folderName", {
+                    required: true,
+                  })}
+                  type="text"
+                  className={errors.folderName ? "input input-error" : "input "}
+                  placeholder="Folder Name"
+                  autoComplete="off"
+                />
+                <button
+                  className="btn btn-primary folder-submit-button"
+                  type="submit"
+                >
+                  Add
+                </button>
+              </div>
+            </form>
+            {/* <p className="label desc">
                 Mischief in mind and decorum left at home.
-              </p>
-            </fieldset>
+              </p> */}
+            {/* </fieldset> */}
           </div>
         </dialog>
         {/* DIALOG TO ADD TO FOLDER*/}
