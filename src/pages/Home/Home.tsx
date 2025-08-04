@@ -203,10 +203,7 @@ const Home: React.FC = () => {
         </dialog>
         {/* DIALOG TO ADD TO FOLDER*/}
         {locationFormOpen && (
-          <PortalModal
-            onClose={closeLocationModal}
-            children={undefined}
-          ></PortalModal>
+          <PortalModal onClose={closeLocationModal}></PortalModal>
         )}
         {/* LISTS OF LOCATIONS */}
         {listView && (

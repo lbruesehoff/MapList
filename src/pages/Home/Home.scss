@@ -56,7 +56,7 @@
 .dialog-submit {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  // align-items: center;
   gap: 1rem;
   input {
     width: 100%;
@@ -99,7 +99,7 @@
 
   .add-folder {
     display: flex;
-    margin: 0.25rem 0.25rem 1rem 0;
+    margin: 0;
     align-self: auto;
   }
 

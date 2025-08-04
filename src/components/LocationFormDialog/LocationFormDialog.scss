@@ -1,3 +1,26 @@
 .dialog-submit {
   display: flex;
 }
+.location-form-title {
+  margin-left: 0.5rem;
+  margin-top: 1rem;
+}
+
+.location-add-button {
+  width: 100%;
+}
+
+.location-modal {
+  width: 30%;
+}
+
+.selected-place-info {
+  margin-bottom: 1rem;
+  margin-left: 0.5rem;
+}
+
+@media screen and (max-width: 768px) {
+  .location-modal {
+    width: 90%;
+  }
+}

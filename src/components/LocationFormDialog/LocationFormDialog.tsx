@@ -9,10 +9,9 @@ import { addMarker, setLocationList } from "../../store/global-store";
 
 interface PortalModalProps {
   onClose: () => void;
-  children?: React.ReactNode;
 }
 
-const PortalModal: React.FC<PortalModalProps> = ({ onClose, children }) => {
+const PortalModal: React.FC<PortalModalProps> = ({ onClose }) => {
   const {
     register,
     handleSubmit,
@@ -98,7 +97,7 @@ const PortalModal: React.FC<PortalModalProps> = ({ onClose, children }) => {
       onClick={onClose}
     >
       <div
-        className="bg-base-100 rounded-box p-6 relative"
+        className="location-modal bg-base-100 rounded-box p-6 relative"
         onClick={(e) => e.stopPropagation()}
       >
         <button
@@ -107,12 +106,12 @@ const PortalModal: React.FC<PortalModalProps> = ({ onClose, children }) => {
         >
           ✕
         </button>
-        <h3 className="font-bold text-lg">New Map List</h3>
+        <h3 className="location-form-title font-bold text-lg">New Location</h3>
         <fieldset className="fieldset">
           <form onSubmit={handleSubmit(onSubmit)}>
-            <legend className="fieldset-legend">
+            {/* <legend className="fieldset-legend">
               Etch its name in the black grimoire
-            </legend>
+            </legend> */}
             <div className="dialog-submit">
               <input
                 {...register("location", {
@@ -124,23 +123,21 @@ const PortalModal: React.FC<PortalModalProps> = ({ onClose, children }) => {
                 className={errors.location ? "input input-error" : "input"}
                 placeholder="Search for a place"
               />
-              <button className="btn btn-ghost" type="submit">
+              {selectedPlace && (
+                <div className="mt-2 selected-place-info">
+                  <strong>Selected:</strong> {selectedPlace.name} <br />
+                  {selectedPlace.formatted_address}
+                </div>
+              )}
+              <button
+                className="btn btn-primary location-add-button"
+                type="submit"
+              >
                 Add
               </button>
             </div>
           </form>
-          <p className="label">
-            A moonlit escapade with mischief in mind and decorum left at home.
-          </p>
         </fieldset>
-
-        {selectedPlace && (
-          <div className="mt-2">
-            <strong>Selected:</strong> {selectedPlace.name} <br />
-            {selectedPlace.formatted_address}
-          </div>
-        )}
-        {children}
       </div>
     </div>,
 
