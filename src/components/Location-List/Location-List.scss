@@ -36,13 +36,15 @@
 }
 
 .location-content {
-  display: flex;
   align-items: center;
-  justify-content: space-between;
 }
 
 @media screen and (max-width: 768px) {
   .no-locations {
     margin: 2rem 0 0 0;
+  }
+  .location-content {
+    display: flex;
+    justify-content: space-between;
   }
 }
