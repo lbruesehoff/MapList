@@ -3,6 +3,7 @@ import "./Location-List.scss";
 import { LocationType } from "../../store/store-interfaces";
 import { useDispatch } from "react-redux";
 import { deleteLocation } from "../../store/global-store";
+import { TrashIcon } from "@phosphor-icons/react/dist/ssr/Trash";
 
 interface Location {
   id: number;
@@ -42,15 +43,9 @@ const LocationList: React.FC<LocationListProps> = ({ locations, onSelect }) => {
             Most played songs this week
           </li> */}
 
-              <li className="list-row">
+              <li className="list-row location-content">
                 <div className="text-primary-content text-4xl font-thin opacity-30 tabular-nums">
                   {index + 1}
-                </div>
-                <div>
-                  <img
-                    className="size-10 rounded-box"
-                    src="https://img.daisyui.com/images/profile/demo/1@94.webp"
-                  />
                 </div>
                 <div className="list-col-grow">
                   <div className="text-primary-content">{location.name}</div>
@@ -62,21 +57,7 @@ const LocationList: React.FC<LocationListProps> = ({ locations, onSelect }) => {
                   className="btn btn-square btn-ghost"
                   onClick={() => deleteLocationMarker(location)}
                 >
-                  <svg
-                    className="size-[1.2em]"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                  >
-                    <g
-                      strokeLinejoin="round"
-                      strokeLinecap="round"
-                      strokeWidth="2"
-                      fill="none"
-                      stroke="currentColor"
-                    >
-                      <path d="M6 3L20 12 6 21 6 3z"></path>
-                    </g>
-                  </svg>
+                  <TrashIcon size={32} className="delete-location-icon" />
                 </button>
               </li>
             </ul>
