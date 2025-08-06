@@ -6,3 +6,32 @@
 .App {
   height: 90vh;
 }
+
+.pac-container {
+  z-index: 9999 !important;
+  border-radius: 7px;
+  background-color: var(--color-primary);
+}
+
+.pac-container::after {
+  display: none;
+}
+
+.pac-item {
+  background: var(--color-primary);
+  color: var(--color-primary-content);
+  border-top: none;
+}
+
+.pac-item:hover {
+  background: var(--color-secondary);
+  color: var(--color-secondary-content);
+}
+
+.pac-icon {
+  display: none;
+}
+
+.pac-item-query {
+  padding-left: 0.5rem;
+}
