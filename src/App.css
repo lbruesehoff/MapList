@@ -35,3 +35,7 @@
 .pac-item-query {
   padding-left: 0.5rem;
 }
+
+.pac-matched {
+  color: var(--color-primary-content);
+}

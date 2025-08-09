@@ -74,6 +74,16 @@ const Navbar: React.FC = () => {
                 type="radio"
                 name="theme-dropdown"
                 className="theme-controller w-full btn btn-sm btn-block btn-ghost justify-start"
+                aria-label="Light"
+                value="light"
+                onChange={handleThemeChange}
+              />
+            </li>
+            <li>
+              <input
+                type="radio"
+                name="theme-dropdown"
+                className="theme-controller w-full btn btn-sm btn-block btn-ghost justify-start"
                 aria-label="Retro"
                 value="retro"
                 onChange={handleThemeChange}
