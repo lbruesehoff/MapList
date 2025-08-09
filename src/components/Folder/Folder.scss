@@ -15,6 +15,11 @@
   }
 }
 
+.folder-li {
+  display: flex;
+  justify-content: space-between;
+}
+
 .add-folder {
   align-self: end;
   margin: 0 0 1rem 0;

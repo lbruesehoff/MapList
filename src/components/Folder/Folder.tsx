@@ -45,13 +45,13 @@ const Folder: React.FC<FolderProps> = ({ name, id, children, onDelete }) => {
             className="list bg-primary bg-base-100 rounded-box shadow-md"
             onClick={toggleFolderOpen}
           >
-            <li className="list-row">
-              <div>
+            <li className="list-row folder-li">
+              {/* <div>
                 <img
                   className="size-10 rounded-box"
                   src="https://img.daisyui.com/images/profile/demo/1@94.webp"
                 />
-              </div>
+              </div> */}
               <div>
                 <div className="text-primary-content">{name}</div>
                 <div className="text-primary-content text-xs uppercase font-semibold opacity-60">
