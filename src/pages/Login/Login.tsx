@@ -1,7 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./login.scss"; // Assuming you have a CSS file for styling
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Themes } from "../../themes/theme-types";
+import { darkOrLight } from "../../themes/theme-functions";
+import loginMapDark from "../../assets/images/login-map-dark.png";
+import loginMap from "../../assets/images/login-map.png";
 
 const Login: React.FC = () => {
   const {
@@ -12,10 +17,16 @@ const Login: React.FC = () => {
     formState: { errors },
   } = useForm();
   const navigate = useNavigate();
+  const getTheme = useSelector((state: any) => state.global.theme);
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   const onSubmit = () => {
     navigate("/home");
   };
+
+  useEffect(() => {
+    setIsDarkMode(darkOrLight(getTheme));
+  }, [getTheme]);
 
   return (
     <div className="login-page">
@@ -43,7 +54,23 @@ const Login: React.FC = () => {
                 <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
               </g>
             </svg>
-            <input type="email" placeholder="Email" />
+            <input
+              type="text"
+              placeholder="Email"
+              autoComplete="username"
+              {...register("email", {
+                required: "Email is required",
+                pattern: {
+                  value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                  message: "Invalid email address",
+                },
+              })}
+            />
+            {errors.email && (
+              <span className="error-message">
+                {errors.email.message as string}
+              </span>
+            )}
           </label>
           <label className="input validator">
             <svg
@@ -65,10 +92,15 @@ const Login: React.FC = () => {
             <input
               type="password"
               placeholder="Password"
-              minLength={8}
-              pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-              title="Must be more than 8 characters, including number, lowercase letter, uppercase letter"
+              {...register("password", {
+                required: "Password is required",
+              })}
             />
+            {errors.password && (
+              <span className="error-message">
+                {errors.password.message as string}
+              </span>
+            )}
           </label>
           <div className="link-buttons">
             <a href="/forgot-password" className="forgot-password-link">
@@ -83,7 +115,20 @@ const Login: React.FC = () => {
           </button>
         </form>
       </div>
-      <div className="login-image-container"></div>
+      <div className="login-image-container">
+        <img
+          src={isDarkMode ? loginMapDark : loginMap}
+          alt="Login Map"
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            borderRadius: "20px",
+          }}
+          loading="eager"
+          fetchPriority="high"
+        />
+      </div>
     </div>
   );
 };

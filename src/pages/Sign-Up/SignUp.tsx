@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./SignUp.scss";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
+import { darkOrLight } from "../../themes/theme-functions";
+import loginMapDark from "../../assets/images/login-map-dark.png";
+import loginMap from "../../assets/images/login-map.png";
 
 const SignUp: React.FC = () => {
   const {
@@ -12,10 +16,16 @@ const SignUp: React.FC = () => {
     formState: { errors },
   } = useForm();
   const navigate = useNavigate();
+  const getTheme = useSelector((state: any) => state.global.theme);
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   const onSubmit = () => {
     navigate("/home");
   };
+
+  useEffect(() => {
+    setIsDarkMode(darkOrLight(getTheme));
+  }, [getTheme]);
   return (
     <div className="sign-up-page">
       <div className="sign-up-form-container">
@@ -107,7 +117,20 @@ const SignUp: React.FC = () => {
           </button>
         </form>
       </div>
-      <div className="sign-up-image-container"></div>
+      <div className="sign-up-image-container">
+        <img
+          src={isDarkMode ? loginMapDark : loginMap}
+          alt="Login Map"
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            borderRadius: "20px",
+          }}
+          loading="eager"
+          fetchPriority="high"
+        />
+      </div>
     </div>
   );
 };

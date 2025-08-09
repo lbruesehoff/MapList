@@ -1,6 +1,6 @@
 .login-page {
   display: flex;
-  height: 100dvh;
+  height: 90dvh;
 }
 
 .login-title {
@@ -37,8 +37,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: url("../../assets/images/login-map.png") center center/cover
-    no-repeat;
   // height: 100vh;
   border-radius: 20px;
   margin: 2rem;
