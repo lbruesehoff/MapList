@@ -37,7 +37,7 @@ const Login: React.FC = () => {
           className="login-form"
           onSubmit={handleSubmit(onSubmit)}
         >
-          <label className="input validator">
+          <label className={errors.email ? "input input-error" : "input"}>
             <svg
               className="h-[1em] opacity-50"
               xmlns="http://www.w3.org/2000/svg"
@@ -72,7 +72,7 @@ const Login: React.FC = () => {
               </span>
             )}
           </label>
-          <label className="input validator">
+          <label className={errors.password ? "input input-error" : "input"}>
             <svg
               className="h-[1em] opacity-50"
               xmlns="http://www.w3.org/2000/svg"
