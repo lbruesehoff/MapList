@@ -28,7 +28,7 @@ const FitBounds: React.FC<{ locations: any[] }> = ({ locations }) => {
       map.fitBounds(bounds);
 
       const currentZoom = map.getZoom();
-      map.setZoom(locations.length < 2 ? currentZoom - 5 : currentZoom - 1);
+      map.setZoom(locations.length < 2 ? currentZoom - 7 : currentZoom);
     }
   }, [map, locations]);
 
@@ -92,7 +92,12 @@ const Map: React.FC = () => {
                     lng: location.geoLocation.lng,
                   }}
                   title={location.name || "Marker"}
-                  label={""}
+                  label={{
+                    text: `${index + 1}`,
+                    color: "#fff",
+                    fontSize: "16px",
+                    fontWeight: "",
+                  }}
                   onClick={() => {
                     console.log(`Marker ${index} clicked`);
                   }}

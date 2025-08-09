@@ -93,7 +93,7 @@ const PortalModal: React.FC<PortalModalProps> = ({ onClose }) => {
 
   return ReactDOM.createPortal(
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
+      className="location-container fixed inset-0 z-50 flex items-center justify-center bg-black/50"
       onClick={onClose}
     >
       <div
