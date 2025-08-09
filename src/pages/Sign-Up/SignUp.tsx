@@ -19,6 +19,11 @@ const SignUp: React.FC = () => {
   const getTheme = useSelector((state: any) => state.global.theme);
   const [isDarkMode, setIsDarkMode] = useState(false);
 
+  const handleLoginRedirect = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    navigate("/login");
+  };
+
   const onSubmit = () => {
     navigate("/home");
   };
@@ -35,7 +40,7 @@ const SignUp: React.FC = () => {
           className="sign-up-form"
           onSubmit={handleSubmit(onSubmit)}
         >
-          <label className="input validator">
+          <label className={errors.firstName ? "input input-error" : "input"}>
             <svg
               className="h-[1em] opacity-50"
               xmlns="http://www.w3.org/2000/svg"
@@ -54,15 +59,31 @@ const SignUp: React.FC = () => {
             </svg>
             <input
               type="text"
-              required
               placeholder="First Name"
-              pattern="[A-Za-z][A-Za-z0-9\-]*"
-              minLength={3}
-              maxLength={30}
-              title="Only letters, numbers or dash"
+              autoComplete="given-name"
+              {...register("firstName", {
+                required: "First name is required",
+                minLength: {
+                  value: 2,
+                  message: "First name must be at least 2 characters",
+                },
+                maxLength: {
+                  value: 30,
+                  message: "First name must be at most 30 characters",
+                },
+                pattern: {
+                  value: /^[A-Za-z][A-Za-z0-9\-]*$/,
+                  message: "Only letters, numbers or dash",
+                },
+              })}
             />
+            {errors.firstName && (
+              <span className="error-message">
+                {errors.firstName.message as string}
+              </span>
+            )}
           </label>
-          <label className="input validator">
+          <label className={errors.email ? "input input-error" : "input"}>
             <svg
               className="h-[1em] opacity-50"
               xmlns="http://www.w3.org/2000/svg"
@@ -79,9 +100,25 @@ const SignUp: React.FC = () => {
                 <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
               </g>
             </svg>
-            <input type="email" placeholder="Email" />
+            <input
+              type="text"
+              placeholder="Email"
+              autoComplete="email"
+              {...register("email", {
+                required: "Email is required",
+                pattern: {
+                  value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                  message: "Invalid email address",
+                },
+              })}
+            />
+            {errors.email && (
+              <span className="error-message">
+                {errors.email.message as string}
+              </span>
+            )}
           </label>
-          <label className="input validator">
+          <label className={errors.password ? "input input-error" : "input"}>
             <svg
               className="h-[1em] opacity-50"
               xmlns="http://www.w3.org/2000/svg"
@@ -99,16 +136,31 @@ const SignUp: React.FC = () => {
               </g>
             </svg>
             <input
-              type="password"
+              type="text"
               placeholder="Password"
-              minLength={8}
-              pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-              title="Must be more than 8 characters, including number, lowercase letter, uppercase letter"
+              autoComplete="new-password"
+              {...register("password", {
+                required: "Password is required",
+                minLength: {
+                  value: 6,
+                  message: "Password must be at least 6 characters",
+                },
+                pattern: {
+                  value:
+                    /^(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{6,}$/,
+                  message: "Must include a capital letter and special symbol",
+                },
+              })}
             />
+            {errors.password && (
+              <span className="error-message">
+                {errors.password.message as string}
+              </span>
+            )}
           </label>
           <div className="link-buttons">
             <a href="/forgot-password" className="forgot-password-link"></a>
-            <a href="" className="sign-up-link">
+            <a className="sign-up-link" onClick={handleLoginRedirect}>
               Already have an account? Log in
             </a>
           </div>

@@ -28,6 +28,13 @@ const Login: React.FC = () => {
     setIsDarkMode(darkOrLight(getTheme));
   }, [getTheme]);
 
+  function handleSignUpRedirect(
+    event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+  ): void {
+    event.preventDefault();
+    navigate("/sign-up");
+  }
+
   return (
     <div className="login-page">
       <div className="login-form-container">
@@ -106,7 +113,7 @@ const Login: React.FC = () => {
             <a href="/forgot-password" className="forgot-password-link">
               Forgot Password?
             </a>
-            <a href="" className="sign-up-link">
+            <a href="" className="sign-up-link" onClick={handleSignUpRedirect}>
               Create an Account
             </a>
           </div>
