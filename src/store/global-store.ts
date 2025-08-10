@@ -4,9 +4,11 @@ import {
   GlobalState,
   LocationMarker,
   LocationType,
+  UserType,
 } from "./store-interfaces";
 
 const initialState: GlobalState = {
+  user: null,
   theme: "default",
   selectedFolder: { id: "", name: "", locations: [] },
   folders: [],
@@ -18,6 +20,9 @@ const globalSlice = createSlice({
   name: "global",
   initialState,
   reducers: {
+    setUser: (state, action: PayloadAction<UserType | null>) => {
+      state.user = action.payload;
+    },
     setTheme: (state, action: PayloadAction<string>) => {
       state.theme = action.payload;
     },
@@ -101,6 +106,7 @@ const globalSlice = createSlice({
 });
 
 export const {
+  setUser,
   setTheme,
   setSelectedFolder,
   addFolder,

@@ -2,9 +2,12 @@ import React, { useEffect, useState } from "react";
 import "./login.scss"; // Assuming you have a CSS file for styling
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { Themes } from "../../themes/theme-types";
+import { useDispatch, useSelector } from "react-redux";
 import { darkOrLight } from "../../themes/theme-functions";
+import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { auth, provider } from "../../google/config";
+import { UserType } from "../../store/store-interfaces";
+import { setUser } from "../../store/global-store";
 import loginMapDark from "../../assets/images/login-map-dark.png";
 import loginMap from "../../assets/images/login-map.png";
 
@@ -17,8 +20,32 @@ const Login: React.FC = () => {
     formState: { errors },
   } = useForm();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const getTheme = useSelector((state: any) => state.global.theme);
   const [isDarkMode, setIsDarkMode] = useState(false);
+
+  const googleSignIn = () => {
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential ? credential.accessToken : null;
+        // The signed-in user info.
+        const user = result.user;
+        // IdP data available using getAdditionalUserInfo(result)
+        // Store user data in state management
+        const userData: UserType = {
+          id: user.uid,
+          email: user.email ?? "",
+          name: user.displayName ?? "",
+        };
+        dispatch(setUser(userData));
+        navigate("/home");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   const onSubmit = () => {
     navigate("/home");
@@ -123,7 +150,10 @@ const Login: React.FC = () => {
         </form>
         <div className="login-with-google">
           <div className="divider">OR</div>
-          <button className="btn bg-white text-black border-[#e5e5e5]">
+          <button
+            onClick={googleSignIn}
+            className="btn bg-white text-black border-[#e5e5e5]"
+          >
             <svg
               aria-label="Google logo"
               width="16"

@@ -1,16 +1,33 @@
 import React, { useState } from "react";
-import { set } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { setTheme } from "../../store/global-store";
+import { setTheme, setUser } from "../../store/global-store";
+import { getAuth, signOut } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+import "./Navbar.scss";
 
 const Navbar: React.FC = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const auth = getAuth();
+
   const handleThemeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedTheme = event.target.value;
 
     dispatch(setTheme(selectedTheme));
     document.documentElement.setAttribute("data-theme", event.target.value);
   };
+
+  const handleLogout = () => {
+    signOut(auth)
+      .then(() => {
+        dispatch(setUser(null));
+        navigate("/login");
+      })
+      .catch((error) => {
+        // An error happened.
+      });
+  };
+
   return (
     <div className="navbar bg-base-100">
       <div className="navbar-start">
@@ -51,7 +68,7 @@ const Navbar: React.FC = () => {
       <div className="navbar-center">
         <a className="btn btn-ghost text-xl">Map List</a>
       </div>
-      <div className="navbar-end">
+      <div className="navbar-end nav-bar-end-buttons">
         <div className="dropdown ">
           <div tabIndex={0} role="button" className="btn m-1">
             Theme
@@ -141,6 +158,9 @@ const Navbar: React.FC = () => {
             </li>
           </ul>
         </div>
+        <button onClick={handleLogout} className="btn btn-primary">
+          Logout
+        </button>
       </div>
     </div>
   );

@@ -1,9 +1,16 @@
 export interface GlobalState {
+  user: UserType | null; // User can be null if not logged in
   theme: string; // Theme can be 'default', 'dark', etc.
   selectedFolder: FolderType;
   folders: FolderType[]; // List of folders
   folderOpen: boolean; // Indicates if the folder is open
   locationMarkers: LocationMarker[]; // Optional list of location markers
+}
+
+export interface UserType {
+  id: string;
+  email: string;
+  name: string;
 }
 
 export interface FolderType {
