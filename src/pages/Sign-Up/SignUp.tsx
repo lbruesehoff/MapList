@@ -2,8 +2,12 @@ import React, { useEffect, useState } from "react";
 import "./SignUp.scss";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { darkOrLight } from "../../themes/theme-functions";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../google/config";
+import { setUser } from "../../store/global-store";
+import { UserType } from "../../store/store-interfaces";
 import loginMapDark from "../../assets/images/login-map-dark.png";
 import loginMap from "../../assets/images/login-map.png";
 
@@ -16,8 +20,10 @@ const SignUp: React.FC = () => {
     formState: { errors },
   } = useForm();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const getTheme = useSelector((state: any) => state.global.theme);
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [emailInUseError, setEmailInUseError] = useState(false);
 
   const handleLoginRedirect = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
@@ -25,7 +31,30 @@ const SignUp: React.FC = () => {
   };
 
   const onSubmit = () => {
-    navigate("/home");
+    const { email, password } = getValues();
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed up
+        const user = userCredential.user;
+        const userData: UserType = {
+          id: user.uid,
+          email: user.email ?? "",
+          name: user.displayName ?? "",
+        };
+        dispatch(setUser(userData));
+        navigate("/home");
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        if (errorCode === "auth/email-already-in-use") {
+          setError("email", {
+            type: "manual",
+            message: "",
+          });
+          setEmailInUseError(true);
+        }
+      });
   };
 
   useEffect(() => {
@@ -40,6 +69,11 @@ const SignUp: React.FC = () => {
           className="sign-up-form"
           onSubmit={handleSubmit(onSubmit)}
         >
+          {emailInUseError && (
+            <div role="alert" className="alert alert-error">
+              <span>Error! Email is already in use.</span>
+            </div>
+          )}
           <label className={errors.firstName ? "input input-error" : "input"}>
             <svg
               className="h-[1em] opacity-50"
@@ -68,8 +102,8 @@ const SignUp: React.FC = () => {
                   message: "First name must be at least 2 characters",
                 },
                 maxLength: {
-                  value: 30,
-                  message: "First name must be at most 30 characters",
+                  value: 25,
+                  message: "First name must be at most 25 characters",
                 },
                 pattern: {
                   value: /^[A-Za-z][A-Za-z0-9\-]*$/,
@@ -148,7 +182,7 @@ const SignUp: React.FC = () => {
                 pattern: {
                   value:
                     /^(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{6,}$/,
-                  message: "Must include a capital letter and special symbol",
+                  message: "Needs capital letter and special symbol",
                 },
               })}
             />
