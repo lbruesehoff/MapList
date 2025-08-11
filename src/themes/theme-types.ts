@@ -9,4 +9,6 @@ export enum Themes {
   Forest = "forest",
   Black = "black",
   Nord = "nord",
+  CupCake = "cupcake",
+  Synthwave = "synthwave",
 }

@@ -20,6 +20,10 @@ export const darkOrLight = (theme: Themes): boolean => {
       return true;
     case Themes.Nord:
       return false;
+    case Themes.CupCake:
+      return false;
+    case Themes.Synthwave:
+      return true;
     default:
       return false;
   }

@@ -57,12 +57,11 @@ const Navbar: React.FC = () => {
             <li>
               <a>Homepage</a>
             </li>
-            <li>
-              <a>Portfolio</a>
-            </li>
-            <li>
-              <a>About</a>
-            </li>
+            {user && (
+              <li onClick={handleLogout}>
+                <a>Logout</a>
+              </li>
+            )}
           </ul>
         </div>
       </div>
@@ -104,6 +103,26 @@ const Navbar: React.FC = () => {
                 className="theme-controller w-full btn btn-sm btn-block btn-ghost justify-start"
                 aria-label="Retro"
                 value="retro"
+                onChange={handleThemeChange}
+              />
+            </li>
+            <li>
+              <input
+                type="radio"
+                name="theme-dropdown"
+                className="theme-controller w-full btn btn-sm btn-block btn-ghost justify-start"
+                aria-label="CupCake"
+                value="cupcake"
+                onChange={handleThemeChange}
+              />
+            </li>
+            <li>
+              <input
+                type="radio"
+                name="theme-dropdown"
+                className="theme-controller w-full btn btn-sm btn-block btn-ghost justify-start"
+                aria-label="Synthwave"
+                value="synthwave"
                 onChange={handleThemeChange}
               />
             </li>
@@ -160,7 +179,7 @@ const Navbar: React.FC = () => {
           </ul>
         </div>
         {user && (
-          <button onClick={handleLogout} className="btn btn-primary">
+          <button onClick={handleLogout} className="btn btn-primary logout">
             Logout
           </button>
         )}
