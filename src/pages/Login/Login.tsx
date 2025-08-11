@@ -4,7 +4,11 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { darkOrLight } from "../../themes/theme-functions";
-import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import {
+  signInWithPopup,
+  GoogleAuthProvider,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 import { auth, provider } from "../../google/config";
 import { UserType } from "../../store/store-interfaces";
 import { setUser } from "../../store/global-store";
@@ -23,6 +27,7 @@ const Login: React.FC = () => {
   const dispatch = useDispatch();
   const getTheme = useSelector((state: any) => state.global.theme);
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [signInError, setSignInError] = useState(false);
 
   const googleSignIn = () => {
     signInWithPopup(auth, provider)
@@ -47,8 +52,32 @@ const Login: React.FC = () => {
       });
   };
 
+  const signIn = () => {
+    const email = getValues("email");
+    const password = getValues("password");
+
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        const userData: UserType = {
+          id: user.uid,
+          email: user.email ?? "",
+          name: user.displayName ?? "",
+        };
+        dispatch(setUser(userData));
+        navigate("/home");
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode, errorMessage);
+        setSignInError(true);
+      });
+  };
+
   const onSubmit = () => {
-    navigate("/home");
+    signIn();
   };
 
   useEffect(() => {
@@ -71,6 +100,11 @@ const Login: React.FC = () => {
           className="login-form"
           onSubmit={handleSubmit(onSubmit)}
         >
+          {signInError && (
+            <div role="alert" className="alert alert-error">
+              <span>Error! Invalid email or password.</span>
+            </div>
+          )}
           <label className={errors.email ? "input input-error" : "input"}>
             <svg
               className="h-[1em] opacity-50"

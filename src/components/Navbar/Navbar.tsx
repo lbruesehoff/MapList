@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setTheme, setUser } from "../../store/global-store";
 import { getAuth, signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
@@ -9,6 +9,7 @@ const Navbar: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const auth = getAuth();
+  const user = useSelector((state: any) => state.global.user);
 
   const handleThemeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedTheme = event.target.value;
@@ -158,9 +159,11 @@ const Navbar: React.FC = () => {
             </li>
           </ul>
         </div>
-        <button onClick={handleLogout} className="btn btn-primary">
-          Logout
-        </button>
+        {user && (
+          <button onClick={handleLogout} className="btn btn-primary">
+            Logout
+          </button>
+        )}
       </div>
     </div>
   );
