@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Location-List.scss";
 import { LocationType } from "../../store/store-interfaces";
-import { useDispatch } from "react-redux";
-import { deleteLocation } from "../../store/global-store";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteLocation, setLocationList } from "../../store/global-store";
 import { TrashIcon } from "@phosphor-icons/react/dist/ssr/Trash";
+import { getLocations } from "../../google/Fire-Store/database-calls";
+import { getAuth } from "firebase/auth";
 
 interface Location {
   id: number;
@@ -18,7 +20,22 @@ interface LocationListProps {
 
 const LocationList: React.FC<LocationListProps> = ({ locations, onSelect }) => {
   const dispatch = useDispatch();
+  const auth = getAuth();
+  const user = auth.currentUser;
+  const selectedFolder = useSelector(
+    (state: any) => state.global.selectedFolder
+  );
   const [removingId, setRemovingId] = useState<string | null>(null); // State to track which location is being removed
+
+  useEffect(() => {
+    const fetchLocations = async () => {
+      const locations = await getLocations(user?.uid || "", selectedFolder.id);
+      locations.forEach((location) => {
+        dispatch(setLocationList(location));
+      });
+    };
+    fetchLocations();
+  }, [selectedFolder.id]);
 
   const deleteLocationMarker = (location: LocationType) => {
     setRemovingId(location.id);

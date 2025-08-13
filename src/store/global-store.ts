@@ -32,7 +32,10 @@ const globalSlice = createSlice({
     },
     addFolder: (state, action: PayloadAction<FolderType>) => {
       const { id, name, locations } = action.payload;
-      state.folders.push({ id, name, locations });
+      // Only add the folder if it doesn't already exist (by id)
+      if (!state.folders.some((folder) => folder.id === id)) {
+        state.folders.push({ id, name, locations });
+      }
     },
     deleteFolder: (state, action: PayloadAction<string>) => {
       const folderId = action.payload;
@@ -67,7 +70,12 @@ const globalSlice = createSlice({
         if (!folder.locations) {
           folder.locations = [];
         }
-        folder.locations.push(newLocation);
+        // Only add the location if it doesn't already exist (by id)
+        if (
+          !folder.locations.some((location) => location.id === newLocation.id)
+        ) {
+          folder.locations.push(newLocation);
+        }
         state.selectedFolder = folder; // Update selectedFolder to the folder containing the new location
       }
     },

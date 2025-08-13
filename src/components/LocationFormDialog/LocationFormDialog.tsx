@@ -7,6 +7,7 @@ import "./LocationFormDialog.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { addMarker, setLocationList } from "../../store/global-store";
 import { addLocation } from "../../google/Fire-Store/database-calls";
+import { getAuth } from "firebase/auth";
 
 interface PortalModalProps {
   onClose: () => void;
@@ -36,6 +37,9 @@ const PortalModal: React.FC<PortalModalProps> = ({ onClose }) => {
   const selectedFolder = useSelector(
     (state: any) => state.global.selectedFolder
   );
+
+  const auth = getAuth();
+  const user = auth.currentUser;
 
   useEffect(() => {
     if (
@@ -75,8 +79,8 @@ const PortalModal: React.FC<PortalModalProps> = ({ onClose }) => {
       geoLocation: getValues("location"),
     };
     dispatch(addMarker(getValues("location")));
-    dispatch(setLocationList(locationData));
-    addLocation(selectedFolder.id, locationData);
+    dispatch(setLocationList(locationData)); // Update Redux store
+    addLocation(user?.uid || "", selectedFolder.id, locationData); // Add to Firestore
     onClose();
   };
 

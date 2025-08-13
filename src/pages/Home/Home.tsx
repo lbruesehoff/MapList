@@ -13,7 +13,11 @@ import {
 } from "../../store/global-store";
 import PortalModal from "../../components/LocationFormDialog/LocationFormDialog";
 import { useWindowSize } from "../../hooks/useWindowSize";
-import { createFolder } from "../../google/Fire-Store/database-calls";
+import {
+  createFolder,
+  getFolders,
+} from "../../google/Fire-Store/database-calls";
+import { getAuth } from "@firebase/auth";
 import "./Home.scss";
 
 const Home: React.FC = () => {
@@ -39,10 +43,22 @@ const Home: React.FC = () => {
   const [leavingFolderId, setLeavingFolderId] = useState<string | null>(null);
   const [listView, setListView] = useState(true);
   const { screenWidth, screenHeight } = useWindowSize();
+  const auth = getAuth();
+  const user = auth.currentUser;
 
   useEffect(() => {
     setListView(true); // Reset to list view on screen size change
   }, [screenWidth]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const folders = await getFolders(user?.uid || "");
+      folders.forEach((folder) => {
+        dispatch(addFolder(folder));
+      });
+    };
+    fetchData();
+  }, []);
   /**
    * Determine what dialog opens based on the folder parameter.
    * @param folder
@@ -82,7 +98,7 @@ const Home: React.FC = () => {
         locations: [],
       };
       dispatch(addFolder(folderData)); // Add to Redux store
-      createFolder(folderData); // Add to Firestore
+      createFolder(user?.uid || "", folderData); // Add to Firestore
       closeModal();
     } else {
       dispatch(
