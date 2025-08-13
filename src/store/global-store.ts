@@ -9,7 +9,7 @@ import {
 
 const initialState: GlobalState = {
   user: null,
-  theme: "default",
+  theme: "bumblebee",
   selectedFolder: { id: "", name: "", locations: [] },
   folders: [],
   folderOpen: false,
@@ -20,6 +20,14 @@ const globalSlice = createSlice({
   name: "global",
   initialState,
   reducers: {
+    clearStore: (state) => {
+      state.user = null;
+      state.theme = "bumblebee";
+      state.selectedFolder = { id: "", name: "", locations: [] };
+      state.folders = [];
+      state.folderOpen = false;
+      state.locationMarkers = [];
+    },
     setUser: (state, action: PayloadAction<UserType | null>) => {
       state.user = action.payload;
     },
@@ -114,6 +122,7 @@ const globalSlice = createSlice({
 });
 
 export const {
+  clearStore,
   setUser,
   setTheme,
   setSelectedFolder,

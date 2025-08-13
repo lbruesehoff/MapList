@@ -3,7 +3,7 @@ import "./login.scss"; // Assuming you have a CSS file for styling
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { darkOrLight } from "../../themes/theme-functions";
+import { isDark } from "../../themes/theme-functions";
 import {
   signInWithPopup,
   GoogleAuthProvider,
@@ -84,7 +84,7 @@ const Login: React.FC = () => {
   };
 
   useEffect(() => {
-    setIsDarkMode(darkOrLight(getTheme));
+    setIsDarkMode(isDark(getTheme));
   }, [getTheme]);
 
   function handleSignUpRedirect(

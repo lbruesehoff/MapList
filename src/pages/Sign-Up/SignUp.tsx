@@ -3,7 +3,7 @@ import "./SignUp.scss";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { darkOrLight } from "../../themes/theme-functions";
+import { isDark } from "../../themes/theme-functions";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../google/config";
 import { setUser } from "../../store/global-store";
@@ -58,7 +58,7 @@ const SignUp: React.FC = () => {
   };
 
   useEffect(() => {
-    setIsDarkMode(darkOrLight(getTheme));
+    setIsDarkMode(isDark(getTheme));
   }, [getTheme]);
   return (
     <div className="sign-up-page">

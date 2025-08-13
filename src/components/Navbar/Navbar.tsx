@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setTheme, setUser } from "../../store/global-store";
+import { clearStore, setTheme, setUser } from "../../store/global-store";
 import { getAuth, signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import {
@@ -8,6 +8,7 @@ import {
   updateUserTheme,
 } from "../../google/Fire-Store/database-calls";
 import "./Navbar.scss";
+import { Themes } from "../../themes/theme-types";
 
 const Navbar: React.FC = () => {
   const dispatch = useDispatch();
@@ -39,7 +40,8 @@ const Navbar: React.FC = () => {
   const handleLogout = () => {
     signOut(auth)
       .then(() => {
-        dispatch(setUser(null));
+        dispatch(clearStore());
+        document.documentElement.setAttribute("data-theme", "bumblebee"); // Clear the Redux store
         navigate("/login");
       })
       .catch((error) => {
@@ -104,96 +106,19 @@ const Navbar: React.FC = () => {
             tabIndex={0}
             className="dropdown-content bg-base-300 rounded-box z-1 w-52 p-2 shadow-2xl"
           >
-            <li>
-              <input
-                type="radio"
-                name="theme-dropdown"
-                className="theme-controller w-full btn btn-sm btn-block btn-ghost justify-start"
-                aria-label="Light"
-                value="light"
-                onChange={handleThemeChange}
-              />
-            </li>
-            <li>
-              <input
-                type="radio"
-                name="theme-dropdown"
-                className="theme-controller w-full btn btn-sm btn-block btn-ghost justify-start"
-                aria-label="Retro"
-                value="retro"
-                onChange={handleThemeChange}
-              />
-            </li>
-            <li>
-              <input
-                type="radio"
-                name="theme-dropdown"
-                className="theme-controller w-full btn btn-sm btn-block btn-ghost justify-start"
-                aria-label="CupCake"
-                value="cupcake"
-                onChange={handleThemeChange}
-              />
-            </li>
-            <li>
-              <input
-                type="radio"
-                name="theme-dropdown"
-                className="theme-controller w-full btn btn-sm btn-block btn-ghost justify-start"
-                aria-label="Synthwave"
-                value="synthwave"
-                onChange={handleThemeChange}
-              />
-            </li>
-            <li>
-              <input
-                type="radio"
-                name="theme-dropdown"
-                className="theme-controller w-full btn btn-sm btn-block btn-ghost justify-start"
-                aria-label="Abyss"
-                value="abyss"
-                onChange={handleThemeChange}
-              />
-            </li>
-            <li>
-              <input
-                type="radio"
-                name="theme-dropdown"
-                className="theme-controller w-full btn btn-sm btn-block btn-ghost justify-start"
-                aria-label="Cyberpunk"
-                value="cyberpunk"
-                onChange={handleThemeChange}
-              />
-            </li>
-            <li>
-              <input
-                type="radio"
-                name="theme-dropdown"
-                className="theme-controller w-full btn btn-sm btn-block btn-ghost justify-start"
-                aria-label="Black"
-                value="black"
-                onChange={handleThemeChange}
-              />
-            </li>
-            <li>
-              <input
-                type="radio"
-                name="theme-dropdown"
-                className="theme-controller w-full btn btn-sm btn-block btn-ghost justify-start"
-                aria-label="Forest"
-                value="forest"
-                onChange={handleThemeChange}
-              />
-            </li>
-            <li>
-              <input
-                type="radio"
-                name="theme-dropdown"
-                className="theme-controller w-full btn btn-sm btn-block btn-ghost justify-start"
-                aria-label="Nord"
-                value="nord"
-                onChange={handleThemeChange}
-              />
-            </li>
+            {Themes &&
+              Object.values(Themes).map((theme) => (
+                <li key={theme}>
+                  <input
+                    type="radio"
+                    name="theme-dropdown"
+                    className="theme-controller w-full btn btn-sm btn-block btn-ghost justify-start"
+                    aria-label={theme}
+                    value={theme}
+                    onChange={handleThemeChange}
+                  />
+                </li>
+              ))}
           </ul>
         </div>
         {user && (
