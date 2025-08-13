@@ -22,20 +22,8 @@ const LocationList: React.FC<LocationListProps> = ({ locations, onSelect }) => {
   const dispatch = useDispatch();
   const auth = getAuth();
   const user = auth.currentUser;
-  const selectedFolder = useSelector(
-    (state: any) => state.global.selectedFolder
-  );
-  const [removingId, setRemovingId] = useState<string | null>(null); // State to track which location is being removed
 
-  useEffect(() => {
-    const fetchLocations = async () => {
-      const locations = await getLocations(user?.uid || "", selectedFolder.id);
-      locations.forEach((location) => {
-        dispatch(setLocationList(location));
-      });
-    };
-    fetchLocations();
-  }, [selectedFolder.id]);
+  const [removingId, setRemovingId] = useState<string | null>(null); // State to track which location is being removed
 
   const deleteLocationMarker = (location: LocationType) => {
     setRemovingId(location.id);

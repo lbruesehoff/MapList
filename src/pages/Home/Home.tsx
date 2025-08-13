@@ -15,6 +15,7 @@ import PortalModal from "../../components/LocationFormDialog/LocationFormDialog"
 import { useWindowSize } from "../../hooks/useWindowSize";
 import {
   createFolder,
+  getAllLocations,
   getFolders,
 } from "../../google/Fire-Store/database-calls";
 import { getAuth } from "@firebase/auth";
@@ -50,15 +51,21 @@ const Home: React.FC = () => {
     setListView(true); // Reset to list view on screen size change
   }, [screenWidth]);
 
+  // Fetch all locations and folders
   useEffect(() => {
     const fetchData = async () => {
       const folders = await getFolders(user?.uid || "");
       folders.forEach((folder) => {
         dispatch(addFolder(folder));
       });
+      const locations = await getAllLocations(user?.uid || "");
+      locations.forEach((location) => {
+        dispatch(setLocationList(location));
+      });
     };
     fetchData();
   }, []);
+
   /**
    * Determine what dialog opens based on the folder parameter.
    * @param folder

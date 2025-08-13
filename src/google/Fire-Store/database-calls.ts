@@ -73,6 +73,34 @@ async function getLocations(userId: string, folderId: string) {
   return snapshot.docs.map((doc) => doc.data() as LocationType);
 }
 
+async function getAllLocations(userId: string): Promise<LocationType[]> {
+  const foldersRef = collection(db, `users/${userId}/folders`);
+  const folderSnapshot = await getDocs(foldersRef);
+
+  let allLocations: LocationType[] = [];
+
+  for (const folderDoc of folderSnapshot.docs) {
+    const locationsRef = collection(
+      db,
+      `users/${userId}/folders/${folderDoc.id}/locations`
+    );
+    const locationSnapshot = await getDocs(locationsRef);
+    allLocations.push(
+      ...locationSnapshot.docs.map((doc) => doc.data() as LocationType)
+    );
+  }
+
+  return allLocations;
+}
+
+async function getUserTheme(userId: string) {
+  const userDocRef = doc(db, "users", userId);
+  const userDoc = await getDoc(userDocRef);
+  return userDoc.exists()
+    ? (userDoc.data() as { theme: string }).theme
+    : "light";
+}
+
 export {
   ensureUserDocument,
   updateUserTheme,
@@ -80,4 +108,6 @@ export {
   addLocation,
   getFolders,
   getLocations,
+  getAllLocations,
+  getUserTheme,
 };

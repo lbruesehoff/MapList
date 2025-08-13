@@ -1,24 +1,40 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setTheme, setUser } from "../../store/global-store";
 import { getAuth, signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import { updateUserTheme } from "../../google/Fire-Store/database-calls";
+import {
+  getUserTheme,
+  updateUserTheme,
+} from "../../google/Fire-Store/database-calls";
 import "./Navbar.scss";
 
 const Navbar: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const auth = getAuth();
+  const userFireStore = auth.currentUser;
   const user = useSelector((state: any) => state.global.user);
 
   const handleThemeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedTheme = event.target.value;
 
     dispatch(setTheme(selectedTheme)); // Update the theme in the Redux store
-    updateUserTheme(selectedTheme); // Update the theme in Firestore
+    if (user) {
+      updateUserTheme(selectedTheme); // Update the theme in Firestore
+    }
     document.documentElement.setAttribute("data-theme", event.target.value);
   };
+
+  // Fetch user theme when user is signed in
+  useEffect(() => {
+    if (userFireStore) {
+      getUserTheme(userFireStore.uid).then((theme) => {
+        dispatch(setTheme(theme));
+        document.documentElement.setAttribute("data-theme", theme || "light");
+      });
+    }
+  }, [user]);
 
   const handleLogout = () => {
     signOut(auth)
