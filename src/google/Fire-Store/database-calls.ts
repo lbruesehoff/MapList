@@ -6,6 +6,7 @@ import {
   getDoc,
   updateDoc,
   getDocs,
+  deleteDoc,
 } from "firebase/firestore";
 import { FolderType, LocationType } from "../../store/store-interfaces";
 import { app } from "../config";
@@ -101,6 +102,24 @@ async function getUserTheme(userId: string) {
     : "light";
 }
 
+async function deleteFolderFirestore(userId: string, folderId: string) {
+  const folderRef = doc(db, `users/${userId}/folders`, folderId);
+  await deleteDoc(folderRef);
+}
+
+async function deleteLocationFirestore(
+  userId: string,
+  folderId: string,
+  locationId: string
+) {
+  const locationRef = doc(
+    db,
+    `users/${userId}/folders/${folderId}/locations`,
+    locationId
+  );
+  await deleteDoc(locationRef);
+}
+
 export {
   ensureUserDocument,
   updateUserTheme,
@@ -110,4 +129,6 @@ export {
   getLocations,
   getAllLocations,
   getUserTheme,
+  deleteFolderFirestore,
+  deleteLocationFirestore,
 };

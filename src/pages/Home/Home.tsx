@@ -15,6 +15,7 @@ import PortalModal from "../../components/LocationFormDialog/LocationFormDialog"
 import { useWindowSize } from "../../hooks/useWindowSize";
 import {
   createFolder,
+  deleteFolderFirestore,
   getAllLocations,
   getFolders,
 } from "../../google/Fire-Store/database-calls";
@@ -126,7 +127,7 @@ const Home: React.FC = () => {
   };
 
   /**
-   * Deletde a folder and update the state.
+   * Delete a folder and update the state.
    * This function is called when the delete button is clicked on a folder.
    * It sets a leavingFolderId state to trigger a CSS transition,
    * then dispatches the deleteFolder action after a delay to allow the transition to complete.
@@ -136,6 +137,7 @@ const Home: React.FC = () => {
   const handleDeleteFolder = (folderId: string) => {
     setLeavingFolderId(folderId);
     setTimeout(() => {
+      deleteFolderFirestore(user?.uid || "", folderId);
       dispatch(deleteFolder(folderId));
       setLeavingFolderId(null);
     }, 500); // Match your CSS transition duration

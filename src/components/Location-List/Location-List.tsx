@@ -4,7 +4,7 @@ import { LocationType } from "../../store/store-interfaces";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteLocation, setLocationList } from "../../store/global-store";
 import { TrashIcon } from "@phosphor-icons/react/dist/ssr/Trash";
-import { getLocations } from "../../google/Fire-Store/database-calls";
+import { deleteLocationFirestore } from "../../google/Fire-Store/database-calls";
 import { getAuth } from "firebase/auth";
 
 interface Location {
@@ -29,6 +29,7 @@ const LocationList: React.FC<LocationListProps> = ({ locations, onSelect }) => {
     setRemovingId(location.id);
     setTimeout(() => {
       dispatch(deleteLocation(location));
+      deleteLocationFirestore(user?.uid || "", location.folderId, location.id);
       setRemovingId(null);
     }, 400); // Match animation duration
   };
