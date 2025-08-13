@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import "./LocationFormDialog.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { addMarker, setLocationList } from "../../store/global-store";
+import { addLocation } from "../../google/Fire-Store/database-calls";
 
 interface PortalModalProps {
   onClose: () => void;
@@ -66,16 +67,16 @@ const PortalModal: React.FC<PortalModalProps> = ({ onClose }) => {
   };
 
   const onSubmit = () => {
+    const locationData = {
+      id: Date.now().toString(),
+      folderId: selectedFolder.id,
+      name: selectedPlace?.name || "Unnamed Location",
+      address: selectedPlace?.formatted_address || "No Address",
+      geoLocation: getValues("location"),
+    };
     dispatch(addMarker(getValues("location")));
-    dispatch(
-      setLocationList({
-        id: Date.now().toString(),
-        folderId: selectedFolder.id, // Assuming no folder for now
-        name: selectedPlace?.name || "Unnamed Location",
-        address: selectedPlace?.formatted_address || "No Address",
-        geoLocation: getValues("location"),
-      })
-    );
+    dispatch(setLocationList(locationData));
+    addLocation(selectedFolder.id, locationData);
     onClose();
   };
 

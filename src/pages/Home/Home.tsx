@@ -12,8 +12,9 @@ import {
   deleteFolder,
 } from "../../store/global-store";
 import PortalModal from "../../components/LocationFormDialog/LocationFormDialog";
-import "./Home.scss";
 import { useWindowSize } from "../../hooks/useWindowSize";
+import { createFolder } from "../../google/Fire-Store/database-calls";
+import "./Home.scss";
 
 const Home: React.FC = () => {
   const {
@@ -75,13 +76,13 @@ const Home: React.FC = () => {
 
   const onSubmit = () => {
     if (!folderOpen) {
-      dispatch(
-        addFolder({
-          id: folderId,
-          name: getValues("folderName"),
-          locations: [],
-        })
-      );
+      const folderData = {
+        id: folderId,
+        name: getValues("folderName"),
+        locations: [],
+      };
+      dispatch(addFolder(folderData)); // Add to Redux store
+      createFolder(folderData); // Add to Firestore
       closeModal();
     } else {
       dispatch(

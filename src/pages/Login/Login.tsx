@@ -14,6 +14,7 @@ import { UserType } from "../../store/store-interfaces";
 import { setUser } from "../../store/global-store";
 import loginMapDark from "../../assets/images/login-map-dark.png";
 import loginMap from "../../assets/images/login-map.png";
+import { ensureUserDocument } from "../../google/Fire-Store/database-calls";
 
 const Login: React.FC = () => {
   const {
@@ -44,7 +45,8 @@ const Login: React.FC = () => {
           email: user.email ?? "",
           name: user.displayName ?? "",
         };
-        dispatch(setUser(userData));
+        dispatch(setUser(userData)); // Add to redux store
+        ensureUserDocument(); // Add user to Firestore
         navigate("/home");
       })
       .catch((error) => {
@@ -65,7 +67,8 @@ const Login: React.FC = () => {
           email: user.email ?? "",
           name: user.displayName ?? "",
         };
-        dispatch(setUser(userData));
+        dispatch(setUser(userData)); // Add to redux store
+        ensureUserDocument(); // Add user to Firestore
         navigate("/home");
       })
       .catch((error) => {

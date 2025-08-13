@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setTheme, setUser } from "../../store/global-store";
 import { getAuth, signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import { updateUserTheme } from "../../google/Fire-Store/database-calls";
 import "./Navbar.scss";
 
 const Navbar: React.FC = () => {
@@ -14,7 +15,8 @@ const Navbar: React.FC = () => {
   const handleThemeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedTheme = event.target.value;
 
-    dispatch(setTheme(selectedTheme));
+    dispatch(setTheme(selectedTheme)); // Update the theme in the Redux store
+    updateUserTheme(selectedTheme); // Update the theme in Firestore
     document.documentElement.setAttribute("data-theme", event.target.value);
   };
 
