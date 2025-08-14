@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./login.scss"; // Assuming you have a CSS file for styling
+import "./Login.scss"; // Assuming you have a CSS file for styling
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
