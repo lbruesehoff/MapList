@@ -1,0 +1,26 @@
+import * as v2 from "firebase-functions/v2";
+import { SecretManagerServiceClient } from "@google-cloud/secret-manager";
+
+// Cloud Function to get API key from Secret Manager
+export const getApiKey = v2.https.onRequest(async (request, response) => {
+  try {
+    const secretName = request.query.secretName as string;
+    if (!secretName) {
+      response.status(400).send("Missing secretName query parameter.");
+      return;
+    }
+
+    const client = new SecretManagerServiceClient();
+    const [version] = await client.accessSecretVersion({ name: secretName });
+    const payload = version.payload?.data?.toString();
+
+    if (!payload) {
+      response.status(404).send("Secret not found or empty.");
+      return;
+    }
+
+    response.send({ apiKey: payload });
+  } catch (error) {
+    response.status(500).send(`Error: ${(error as Error).message}`);
+  }
+});
