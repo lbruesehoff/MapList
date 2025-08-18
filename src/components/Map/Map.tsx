@@ -9,8 +9,7 @@ import "./Map.scss";
 import { useSelector } from "react-redux";
 import { mapStyles } from "./MapStyles";
 import { MapStyleTypes } from "./Map-Types";
-
-const GOOGLE_MAPS_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+import { useGetGoogleMapsApiKeyQuery } from "../../api/firebase-api";
 
 const FitBounds: React.FC<{ locations: any[] }> = ({ locations }) => {
   const map = useMap();
@@ -40,11 +39,18 @@ const Map: React.FC = () => {
     (state: any) => state.global.selectedFolder
   );
   const getTheme = useSelector((state: any) => state.global.theme);
-
   const [userLocation, setUserLocation] = useState<{
     lat: number;
     lng: number;
   } | null>(null);
+  const [googleMapsApiKey, setGoogleMapsApiKey] = useState<string | null>(null);
+  const { data: googleMapsApiKeyData, error } = useGetGoogleMapsApiKeyQuery();
+
+  useEffect(() => {
+    if (googleMapsApiKeyData) {
+      setGoogleMapsApiKey(googleMapsApiKeyData.apiKey);
+    }
+  }, [googleMapsApiKeyData, error]);
 
   useEffect(() => {
     if ("geolocation" in navigator) {
@@ -65,7 +71,7 @@ const Map: React.FC = () => {
   }, []);
   return (
     <div className="map-container">
-      <APIProvider apiKey={GOOGLE_MAPS_API_KEY}>
+      <APIProvider apiKey={googleMapsApiKey}>
         <div className="map">
           <GoogleMap
             styles={mapStyles(getTheme)}

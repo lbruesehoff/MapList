@@ -3,6 +3,17 @@ import { SecretManagerServiceClient } from "@google-cloud/secret-manager";
 
 // Cloud Function to get API key from Secret Manager
 export const getApiKey = v2.https.onRequest(async (request, response) => {
+  // Add CORS headers
+  response.setHeader("Access-Control-Allow-Origin", "*");
+  response.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
+  response.setHeader("Access-Control-Allow-Headers", "Content-Type");
+
+  // Handle OPTIONS preflight request
+  if (request.method === "OPTIONS") {
+    response.status(204).send("");
+    return;
+  }
+
   try {
     const secretName = request.query.secretName as string;
     if (!secretName) {
