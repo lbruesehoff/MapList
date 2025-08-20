@@ -22,6 +22,9 @@ const LocationList: React.FC<LocationListProps> = ({ locations, onSelect }) => {
   const dispatch = useDispatch();
   const auth = getAuth();
   const user = auth.currentUser;
+  const selectedFolder = useSelector(
+    (state: any) => state.global.selectedFolder
+  );
 
   const [removingId, setRemovingId] = useState<string | null>(null); // State to track which location is being removed
 
@@ -36,6 +39,9 @@ const LocationList: React.FC<LocationListProps> = ({ locations, onSelect }) => {
 
   return (
     <div>
+      <h2 className="text-primary-content folder-name">
+        {selectedFolder?.name}
+      </h2>
       <ul>
         {locations.length > 0 ? (
           locations.map((location, index) => (

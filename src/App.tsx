@@ -3,6 +3,7 @@ import "./App.css";
 import Navbar from "./components/Navbar/Navbar";
 import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
+import Landing from "./pages/Landing/landing";
 import { Routes, Route, Navigate } from "react-router-dom";
 import SignUp from "./pages/Sign-Up/SignUp";
 import { useSelector } from "react-redux";
@@ -29,7 +30,7 @@ function App() {
     <div className="App">
       <Navbar />
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<Landing />} />
         <Route path="/login" element={<Login />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route
