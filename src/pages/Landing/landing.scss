@@ -53,6 +53,21 @@
   color: var(--color-text-secondary);
 }
 
+.landing-mocks {
+  display: flex;
+  justify-content: center;
+  margin-top: 3rem;
+}
+
+.desktop-mock {
+  width: 80%;
+  img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .landing-container {
     padding: 1rem;

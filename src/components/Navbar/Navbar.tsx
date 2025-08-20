@@ -7,8 +7,9 @@ import {
   getUserTheme,
   updateUserTheme,
 } from "../../google/Fire-Store/database-calls";
-import "./Navbar.scss";
 import { Themes } from "../../themes/theme-types";
+import logo from "../../assets/images/maplist-logo.png";
+import "./Navbar.scss";
 
 const Navbar: React.FC = () => {
   const dispatch = useDispatch();
@@ -86,7 +87,12 @@ const Navbar: React.FC = () => {
         </div>
       </div>
       <div className="navbar-center">
-        <a className="btn btn-ghost text-xl">Map List</a>
+        <a className="btn btn-ghost text-xl">
+          <span>
+            <img className="logo" src={logo} alt="Map Icon" />
+          </span>
+          MapList
+        </a>
       </div>
       <div className="navbar-end nav-bar-end-buttons">
         <div className="dropdown ">

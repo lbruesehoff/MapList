@@ -1,6 +1,7 @@
 import React from "react";
 import "./landing.scss";
 import locationLanding from "../../assets/images/location-landing.png";
+import desktopMock from "../../assets/images/mn-trip.png";
 import { useNavigate } from "react-router";
 
 const Landing: React.FC = () => {
@@ -24,20 +25,6 @@ const Landing: React.FC = () => {
         </div>
         <div className="landing-image">
           <img src={locationLanding} alt="Map visualization" />
-          {/* <div className="mockup-browser border border-base-300 w-full">
-          <div className="mockup-browser-toolbar">
-            <div className="input">https://daisyui.com</div>
-          </div>
-          <div className="grid place-content-center h-80">
-            <img src={mnTrip} alt="Map visualization" />
-          </div>
-        </div>
-        <div className="mockup-phone border-primary">
-          <div className="mockup-phone-camera"></div>
-          <div className="mockup-phone-display">
-            <img alt="wallpaper" src="" />
-          </div>
-        </div> */}
         </div>
       </div>
       <div className="landing-sub-section">
@@ -48,6 +35,17 @@ const Landing: React.FC = () => {
           Organize locations the easy way with intuitive tools, seamless flow,
           and themes made for you.
         </div>
+      </div>
+      <div className="landing-mocks">
+        <div className="desktop-mock">
+          <img src={desktopMock} alt="Map visualization" />
+        </div>
+        {/* <div className="mockup-phone border-primary">
+          <div className="mockup-phone-camera"></div>
+          <div className="mockup-phone-display">
+            <img alt="wallpaper" src="" />
+          </div>
+        </div> */}
       </div>
     </div>
   );
