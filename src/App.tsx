@@ -7,6 +7,7 @@ import Landing from "./pages/Landing/landing";
 import { Routes, Route, Navigate } from "react-router-dom";
 import SignUp from "./pages/Sign-Up/SignUp";
 import { useSelector } from "react-redux";
+import Footer from "./components/Footer/footer";
 
 const getCurrentUser = () => {
   const user = useSelector((state: any) => state.global.user);
@@ -42,6 +43,7 @@ function App() {
           }
         />
       </Routes>
+      <Footer />
     </div>
   );
 }
