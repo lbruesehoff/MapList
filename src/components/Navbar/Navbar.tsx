@@ -121,9 +121,16 @@ const Navbar: React.FC = () => {
               ))}
           </ul>
         </div>
-        {user && (
+        {user ? (
           <button onClick={handleLogout} className="btn btn-primary logout">
             Logout
+          </button>
+        ) : (
+          <button
+            onClick={() => navigate("/login")}
+            className="btn btn-primary"
+          >
+            Login
           </button>
         )}
       </div>

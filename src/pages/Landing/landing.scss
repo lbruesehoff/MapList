@@ -1,10 +1,14 @@
 .landing-container {
   padding: 0rem 5rem 3rem 5rem;
   display: flex;
+  flex-direction: column;
+}
+
+.landing-hero {
+  display: flex;
   align-items: center;
   height: 90vh;
   justify-content: center;
-  background-color: var(--color-background);
 }
 .landing-text {
   width: 50%;
@@ -33,11 +37,29 @@
   }
 }
 
+.landing-sub-section {
+  margin-top: 3rem;
+  text-align: center;
+}
+
+.landing-sub-header-text {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+.landing-sub-description {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  color: var(--color-text-secondary);
+}
+
 @media screen and (max-width: 768px) {
   .landing-container {
+    padding: 1rem;
+  }
+  .landing-hero {
     flex-direction: column-reverse;
     justify-content: flex-end;
-    padding: 1rem;
   }
   .landing-text {
     width: 100%;
