@@ -57,6 +57,7 @@
   display: flex;
   justify-content: center;
   margin-top: 3rem;
+  align-items: center;
 }
 
 .desktop-mock {
@@ -66,6 +67,10 @@
     height: auto;
     border-radius: 10px;
   }
+}
+
+.mobile-mock {
+  display: none;
 }
 
 @media screen and (max-width: 768px) {
@@ -87,6 +92,20 @@
     height: 40%;
     img {
       // height: 75%;
+    }
+  }
+  .desktop-mock {
+    display: none;
+  }
+
+  .mobile-mock {
+    display: flex;
+    justify-content: space-around;
+    padding-bottom: 2rem;
+    img {
+      max-width: 40%;
+      height: auto;
+      border-radius: 10px;
     }
   }
 }

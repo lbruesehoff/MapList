@@ -2,6 +2,11 @@ import React from "react";
 import "./landing.scss";
 import locationLanding from "../../assets/images/location-landing.png";
 import desktopMock from "../../assets/images/mn-trip.png";
+import mobileMock from "../../assets/images/mn-trip-mobile.png";
+import mobileMockList from "../../assets/images/mn-trip-mobile-list.png";
+import cupcakeDesktop from "../../assets/images/cupcake-desktop.png";
+import cupcakeMobile from "../../assets/images/cupcake-mobile.png";
+import cupcakeMobileMap from "../../assets/images/cupcake-mobile-map.png";
 import { useNavigate } from "react-router";
 
 const Landing: React.FC = () => {
@@ -37,15 +42,13 @@ const Landing: React.FC = () => {
         </div>
       </div>
       <div className="landing-mocks">
-        <div className="desktop-mock">
-          <img src={desktopMock} alt="Map visualization" />
+        <div className="mobile-mock">
+          <img src={cupcakeMobile} alt="Map visualization" />
+          <img src={cupcakeMobileMap} alt="Map visualization" />
         </div>
-        {/* <div className="mockup-phone border-primary">
-          <div className="mockup-phone-camera"></div>
-          <div className="mockup-phone-display">
-            <img alt="wallpaper" src="" />
-          </div>
-        </div> */}
+        <div className="desktop-mock">
+          <img src={cupcakeDesktop} alt="Map visualization" />
+        </div>
       </div>
     </div>
   );
