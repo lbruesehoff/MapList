@@ -39,9 +39,7 @@ const LocationList: React.FC<LocationListProps> = ({ locations, onSelect }) => {
 
   return (
     <div>
-      <h2 className="text-primary-content folder-name">
-        {selectedFolder?.name}
-      </h2>
+      <h2 className="text-neutral folder-name">{selectedFolder?.name}</h2>
       <ul>
         {locations.length > 0 ? (
           locations.map((location, index) => (

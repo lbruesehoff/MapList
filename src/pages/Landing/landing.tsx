@@ -7,10 +7,16 @@ import mobileMockList from "../../assets/images/mn-trip-mobile-list.png";
 import cupcakeDesktop from "../../assets/images/cupcake-desktop.png";
 import cupcakeMobile from "../../assets/images/cupcake-mobile.png";
 import cupcakeMobileMap from "../../assets/images/cupcake-mobile-map.png";
+import lightDesktop from "../../assets/images/light-desktop.png";
+import lightMobile from "../../assets/images/light-mobile-list.png";
+import lightMobileMap from "../../assets/images/light-mobile-map.png";
 import { useNavigate } from "react-router";
+import { useSelector } from "react-redux";
 
 const Landing: React.FC = () => {
   const navigate = useNavigate();
+  const getTheme = useSelector((state: any) => state.global.theme);
+
   return (
     <div className="landing-container">
       <div className="landing-hero">
@@ -43,11 +49,38 @@ const Landing: React.FC = () => {
       </div>
       <div className="landing-mocks">
         <div className="mobile-mock">
-          <img src={cupcakeMobile} alt="Map visualization" />
-          <img src={cupcakeMobileMap} alt="Map visualization" />
+          <img
+            src={
+              getTheme === "cupcake"
+                ? cupcakeMobile
+                : getTheme === "light"
+                ? lightMobile
+                : mobileMock
+            }
+            alt="Map visualization"
+          />
+          <img
+            src={
+              getTheme === "cupcake"
+                ? cupcakeMobileMap
+                : getTheme === "light"
+                ? lightMobileMap
+                : mobileMockList
+            }
+            alt="Map visualization"
+          />
         </div>
         <div className="desktop-mock">
-          <img src={cupcakeDesktop} alt="Map visualization" />
+          <img
+            src={
+              getTheme === "cupcake"
+                ? cupcakeDesktop
+                : getTheme === "light"
+                ? lightDesktop
+                : desktopMock
+            }
+            alt="Map visualization"
+          />
         </div>
       </div>
     </div>

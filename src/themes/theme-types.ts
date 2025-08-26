@@ -12,3 +12,9 @@ export enum Themes {
   Synthwave = "synthwave",
   Bumblebee = "bumblebee",
 }
+
+export enum LandingThemes {
+  CupCake = "cupcake",
+  Light = "light",
+  Bumblebee = "bumblebee",
+}

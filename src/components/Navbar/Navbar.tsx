@@ -7,7 +7,7 @@ import {
   getUserTheme,
   updateUserTheme,
 } from "../../google/Fire-Store/database-calls";
-import { Themes } from "../../themes/theme-types";
+import { Themes, LandingThemes } from "../../themes/theme-types";
 import logo from "../../assets/images/maplist-logo.png";
 import "./Navbar.scss";
 
@@ -113,7 +113,7 @@ const Navbar: React.FC = () => {
             className="dropdown-content bg-base-300 rounded-box z-1 w-52 p-2 shadow-2xl"
           >
             {Themes &&
-              Object.values(Themes).map((theme) => (
+              Object.values(user ? Themes : LandingThemes).map((theme) => (
                 <li key={theme}>
                   <input
                     type="radio"
