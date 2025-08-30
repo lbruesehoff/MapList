@@ -38,11 +38,15 @@ const Navbar: React.FC = () => {
     }
   }, [user]);
 
+  const navigateTo = (path: string) => {
+    navigate(path);
+  };
+
   const handleLogout = () => {
     signOut(auth)
       .then(() => {
         dispatch(clearStore());
-        document.documentElement.setAttribute("data-theme", "bumblebee"); // Clear the Redux store
+        document.documentElement.setAttribute("data-theme", "light"); // Clear the Redux store
         navigate("/login");
       })
       .catch((error) => {
@@ -75,8 +79,11 @@ const Navbar: React.FC = () => {
             tabIndex={0}
             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
           >
-            <li>
-              <a>Homepage</a>
+            <li onClick={() => navigateTo("/home")}>
+              <a>Map</a>
+            </li>
+            <li onClick={() => navigateTo("/memberships")}>
+              <a>Memberships</a>
             </li>
             {user && (
               <li onClick={handleLogout}>

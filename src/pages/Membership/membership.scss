@@ -1,0 +1,14 @@
+.memberships-container {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  justify-content: center;
+}
+
+.membership-description {
+  font-size: 1.25rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
