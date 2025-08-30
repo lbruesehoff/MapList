@@ -9,6 +9,18 @@
   align-items: center;
   height: 90vh;
   justify-content: center;
+  animation: fadeIn 1.2s ease-in;
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 }
 .landing-text {
   width: 50%;
@@ -73,6 +85,26 @@
   display: none;
 }
 
+.landing-memberships {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.membership-plans {
+  display: flex;
+  justify-content: space-around;
+  gap: 3rem;
+  width: 100%;
+}
+
+.membership-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+}
+
 @media screen and (max-width: 768px) {
   .landing-container {
     padding: 1rem;
@@ -107,5 +139,11 @@
       height: auto;
       border-radius: 10px;
     }
+  }
+
+  .membership-plans {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 }

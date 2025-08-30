@@ -9,7 +9,7 @@ import {
 
 const initialState: GlobalState = {
   user: null,
-  theme: "cupcake",
+  theme: "light",
   selectedFolder: { id: "", name: "", locations: [] },
   folders: [],
   folderOpen: false,
@@ -22,7 +22,7 @@ const globalSlice = createSlice({
   reducers: {
     clearStore: (state) => {
       state.user = null;
-      state.theme = "cupcake";
+      state.theme = "light";
       state.selectedFolder = { id: "", name: "", locations: [] };
       state.folders = [];
       state.folderOpen = false;
