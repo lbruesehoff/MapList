@@ -7,7 +7,7 @@
 .landing-hero {
   display: flex;
   align-items: center;
-  height: 90vh;
+  height: 95vh;
   justify-content: center;
   animation: fadeIn 1.2s ease-in;
 
@@ -30,14 +30,19 @@
 }
 
 .landing-title {
-  font-size: 3rem;
+  font-size: 4rem;
   font-weight: bold;
   margin-bottom: 2rem;
 }
 
 .landing-description {
-  font-size: 1.25rem;
+  font-size: 2rem;
   margin-bottom: 2rem;
+}
+
+.landing-description-highlight {
+  font-weight: 600;
+  font-style: italic;
 }
 
 .landing-image {
@@ -55,12 +60,12 @@
 }
 
 .landing-sub-header-text {
-  font-size: 2rem;
+  font-size: 3rem;
   font-weight: bold;
   margin-bottom: 1rem;
 }
 .landing-sub-description {
-  font-size: 1.1rem;
+  font-size: 1.5rem;
   margin-bottom: 1rem;
   color: var(--color-text-secondary);
 }
@@ -90,6 +95,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: 100dvh;
+  justify-content: center;
 }
 
 .membership-plans {
@@ -102,7 +109,13 @@
 .membership-title {
   font-size: 2rem;
   font-weight: bold;
+  margin: 2rem 0;
+}
+
+.membership-desc {
+  font-size: 1.25rem;
   margin-bottom: 2rem;
+  text-align: center;
 }
 
 @media screen and (max-width: 768px) {
@@ -112,6 +125,7 @@
   .landing-hero {
     flex-direction: column-reverse;
     justify-content: flex-end;
+    margin-bottom: 3rem;
   }
   .landing-text {
     width: 100%;
@@ -145,5 +159,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+  }
+
+  .landing-memberships {
+    height: auto;
   }
 }

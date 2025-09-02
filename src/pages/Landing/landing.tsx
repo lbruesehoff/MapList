@@ -27,7 +27,11 @@ const Landing: React.FC = () => {
         <div className="landing-text">
           <h1 className="landing-title">Organize locations in seconds!</h1>
           <p className="landing-description">
-            A simple way to organize and visualize your favorite places
+            A{" "}
+            <span className="text-secondary landing-description-highlight">
+              simple
+            </span>{" "}
+            way to organize and visualize your favorite places
           </p>
           <button
             className="btn btn-primary"
@@ -44,7 +48,9 @@ const Landing: React.FC = () => {
       </div>
       <div className="landing-sub-section">
         <div className="landing-sub-header-text">
-          Simple. Organized. Visual.
+          <span className="text-neutral">Simple.</span>{" "}
+          <span className="text-secondary">Organized.</span>{" "}
+          <span className="text-neutral">Visual.</span>
         </div>
         <div className="landing-sub-description">
           Organize locations the easy way with intuitive tools, seamless flow,
@@ -88,7 +94,18 @@ const Landing: React.FC = () => {
         </div>
       </div>
       <div className="landing-memberships">
+        <div className="badge badge-xs badge-warning">
+          Get the most out of your membership
+        </div>
+
         <div className="membership-title">Membership Plans</div>
+        <div className="membership-desc">
+          Choose the plan that's
+          <span className="text-secondary membership-highlight">
+            {" "}
+            right for you.
+          </span>
+        </div>
         <div className="membership-plans">
           <div className="card w-96 bg-base-100 shadow-sm">
             <div className="card-body">
@@ -173,7 +190,7 @@ const Landing: React.FC = () => {
               </ul>
               <div className="mt-6">
                 <button
-                  className="btn btn-primary btn-block"
+                  className="btn btn-neutral btn-block"
                   onClick={navigateToSignUp}
                 >
                   Join Now

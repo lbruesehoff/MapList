@@ -3,9 +3,17 @@ import "./membership.scss";
 const Membership: React.FC = () => {
   return (
     <div className="memberships-container">
-      <div className="membership-title">Membership Plans</div>
+      <div className="badge badge-xs badge-warning">
+        Get the most out of your membership
+      </div>
+
+      <div className="membership-page-title">Membership Plans</div>
       <div className="membership-description">
-        Choose the plan that's right for you.
+        Choose the plan that's
+        <span className="text-secondary membership-highlight">
+          {" "}
+          right for you.
+        </span>
       </div>
       <div className="membership-plans">
         <div className="card w-96 bg-base-100 shadow-sm">
@@ -88,7 +96,7 @@ const Membership: React.FC = () => {
               </li>
             </ul>
             <div className="mt-6">
-              <button className="btn btn-primary btn-block">Join Now</button>
+              <button className="btn btn-neutral btn-block">Join Now</button>
             </div>
           </div>
         </div>
