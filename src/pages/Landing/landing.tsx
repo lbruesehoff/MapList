@@ -4,12 +4,12 @@ import locationLanding from "../../assets/images/location-landing.png";
 import desktopMock from "../../assets/images/mn-trip.png";
 import mobileMock from "../../assets/images/mn-trip-mobile.png";
 import mobileMockList from "../../assets/images/mn-trip-mobile-list.png";
-import cupcakeDesktop from "../../assets/images/cupcake-desktop.png";
-import cupcakeMobile from "../../assets/images/cupcake-mobile.png";
-import cupcakeMobileMap from "../../assets/images/cupcake-mobile-map.png";
 import lightDesktop from "../../assets/images/light-desktop.png";
 import lightMobile from "../../assets/images/light-mobile-list.png";
 import lightMobileMap from "../../assets/images/light-mobile-map.png";
+import forestDesktop from "../../assets/images/forestDesktop.png";
+import forestMapMobile from "../../assets/images/forestMapMobile.png";
+import forestListMobile from "../../assets/images/forestListMobile.png";
 import { useNavigate } from "react-router";
 import { useSelector } from "react-redux";
 
@@ -61,8 +61,8 @@ const Landing: React.FC = () => {
         <div className="mobile-mock">
           <img
             src={
-              getTheme === "cupcake"
-                ? cupcakeMobile
+              getTheme === "forest"
+                ? forestListMobile
                 : getTheme === "light"
                 ? lightMobile
                 : mobileMock
@@ -71,8 +71,8 @@ const Landing: React.FC = () => {
           />
           <img
             src={
-              getTheme === "cupcake"
-                ? cupcakeMobileMap
+              getTheme === "forest"
+                ? forestMapMobile
                 : getTheme === "light"
                 ? lightMobileMap
                 : mobileMockList
@@ -83,8 +83,8 @@ const Landing: React.FC = () => {
         <div className="desktop-mock">
           <img
             src={
-              getTheme === "cupcake"
-                ? cupcakeDesktop
+              getTheme === "forest"
+                ? forestDesktop
                 : getTheme === "light"
                 ? lightDesktop
                 : desktopMock
@@ -93,7 +93,7 @@ const Landing: React.FC = () => {
           />
         </div>
       </div>
-      <div className="landing-memberships">
+      <div className="landing-memberships" id="memberships">
         <div className="badge badge-xs badge-warning">
           Get the most out of your membership
         </div>

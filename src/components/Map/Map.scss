@@ -7,18 +7,8 @@
 }
 
 .map-container {
-  opacity: 0;
-  pointer-events: auto; // Ensure pointer events are enabled
-  animation: fadeInMap 1s ease-in forwards;
-}
-
-@keyframes fadeInMap {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  opacity: 1;
+  pointer-events: auto;
 }
 
 @media (max-width: 768px) {

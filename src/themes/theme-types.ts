@@ -14,7 +14,7 @@ export enum Themes {
 }
 
 export enum LandingThemes {
-  CupCake = "cupcake",
   Light = "light",
+  Forest = "forest",
   Bumblebee = "bumblebee",
 }

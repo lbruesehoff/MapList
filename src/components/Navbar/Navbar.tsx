@@ -17,6 +17,7 @@ const Navbar: React.FC = () => {
   const auth = getAuth();
   const userFireStore = auth.currentUser;
   const user = useSelector((state: any) => state.global.user);
+  const getTheme = useSelector((state: any) => state.global.theme);
 
   const handleThemeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedTheme = event.target.value;
@@ -40,6 +41,21 @@ const Navbar: React.FC = () => {
 
   const navigateTo = (path: string) => {
     navigate(path);
+  };
+
+  const handleScrollToMemberships = () => {
+    const el = document.getElementById("memberships");
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth" });
+    } else {
+      navigate("/");
+      setTimeout(() => {
+        const el = document.getElementById("memberships");
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth" });
+        }
+      }, 100);
+    }
   };
 
   const handleLogout = () => {
@@ -79,16 +95,32 @@ const Navbar: React.FC = () => {
             tabIndex={0}
             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
           >
-            <li onClick={() => navigateTo("/home")}>
-              <a>Map</a>
-            </li>
-            <li onClick={() => navigateTo("/memberships")}>
-              <a>Memberships</a>
-            </li>
-            {user && (
-              <li onClick={handleLogout}>
-                <a>Logout</a>
-              </li>
+            {user ? (
+              <>
+                <li onClick={() => navigateTo("/home")}>
+                  <a>Map</a>
+                </li>
+
+                <li onClick={() => navigateTo("/memberships")}>
+                  <a>Memberships</a>
+                </li>
+
+                <li onClick={handleLogout}>
+                  <a>Logout</a>
+                </li>
+              </>
+            ) : (
+              <>
+                <li onClick={() => navigateTo("/")}>
+                  <a>Home</a>
+                </li>
+                <li onClick={handleScrollToMemberships}>
+                  <a>Memberships</a>
+                </li>
+                <li onClick={() => navigateTo("/login")}>
+                  <a>Login</a>
+                </li>
+              </>
             )}
           </ul>
         </div>
@@ -104,7 +136,7 @@ const Navbar: React.FC = () => {
       <div className="navbar-end nav-bar-end-buttons">
         <div className="dropdown ">
           <div tabIndex={0} role="button" className="btn m-1">
-            Theme
+            <span className="theme">{getTheme}</span>
             <svg
               width="12px"
               height="12px"
@@ -141,7 +173,7 @@ const Navbar: React.FC = () => {
         ) : (
           <button
             onClick={() => navigate("/login")}
-            className="btn btn-primary"
+            className="btn btn-primary login-button"
           >
             Login
           </button>

@@ -1,14 +1,22 @@
 .nav-bar-end-buttons {
   gap: 1.5rem;
-  padding-right: 1.5rem;
+  padding-right: 1rem;
 }
 
 .logo {
   width: 1.5rem;
 }
 
+.theme {
+  text-transform: capitalize;
+}
+
 @media screen and (max-width: 768px) {
   .logout {
+    display: none;
+  }
+
+  .login-button {
     display: none;
   }
 }
