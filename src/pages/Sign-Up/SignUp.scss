@@ -1,12 +1,31 @@
 .sign-up-page {
   display: flex;
-  height: 90dvh;
+  height: 100dvh;
 }
 
 .sign-up-title {
   font-size: 2rem;
   font-weight: bold;
-  margin-bottom: 1rem;
+  // margin-bottom: 1rem;
+}
+
+.confirm-email-container {
+  // height: 2rem;
+}
+
+.confirm-email {
+  animation: slide-up 1s ease-out;
+
+  @keyframes slide-up {
+    from {
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 }
 
 .sign-up-form {
@@ -29,7 +48,19 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1.5rem;
+  animation: slide-up 1s ease-out;
+
+  @keyframes slide-up {
+    from {
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 }
 
 .sign-up-image-container {
@@ -78,7 +109,6 @@
   .sign-up-image-container {
     width: auto;
     height: 20%;
-    margin: 1rem;
     border-radius: 20px;
     background-position: center top; // Moves the background image up
   }

@@ -28,7 +28,7 @@ async function ensureUserDocument() {
       name: user.displayName || "",
       email: user.email || "",
       createdAt: new Date().toISOString(),
-      theme: "default", // Default theme
+      theme: "light", // Default theme
     });
   }
 }
