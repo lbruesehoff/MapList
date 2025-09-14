@@ -64,6 +64,9 @@ const SignUp: React.FC = () => {
 
   const onSubmit = async () => {
     const [email, password] = getValues(["email", "password"]);
+    // Reset errors
+    setEmailInUseError(false);
+    setShowConfirmEmail(false);
     try {
       const userCredential = await createUserWithEmailAndPassword(
         auth,

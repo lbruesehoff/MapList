@@ -9,7 +9,7 @@ import SignUp from "./pages/Sign-Up/SignUp";
 import { useSelector } from "react-redux";
 import Footer from "./components/Footer/footer";
 import Membership from "./pages/Membership/membership";
-
+import VerifyEmail from "./pages/Verify-Email/VerifyEmail";
 const getCurrentUser = () => {
   const user = useSelector((state: any) => state.global.user);
   return user ? true : false;
@@ -35,6 +35,7 @@ function App() {
         <Route path="/" element={<Landing />} />
         <Route path="/login" element={<Login />} />
         <Route path="/sign-up" element={<SignUp />} />
+        <Route path="/verify-email" element={<VerifyEmail />} />
         <Route
           path="/home"
           element={

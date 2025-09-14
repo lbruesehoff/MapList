@@ -28,6 +28,7 @@ const Login: React.FC = () => {
   const getTheme = useSelector((state: any) => state.global.theme);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [signInError, setSignInError] = useState(false);
+  const [emailVerified, setEmailVerified] = useState(true);
 
   const googleSignIn = () => {
     signInWithPopup(auth, provider)
@@ -49,7 +50,7 @@ const Login: React.FC = () => {
         navigate("/home");
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
       });
   };
 
@@ -59,21 +60,28 @@ const Login: React.FC = () => {
 
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        // Signed in
         const user = userCredential.user;
-        const userData: UserType = {
-          id: user.uid,
-          email: user.email ?? "",
-          name: user.displayName ?? "",
-        };
-        dispatch(setUser(userData)); // Add to redux store
-        ensureUserDocument(); // Add user to Firestore
-        navigate("/home");
+
+        if (user.emailVerified) {
+          // Signed in
+          const userData: UserType = {
+            id: user.uid,
+            email: user.email ?? "",
+            name: user.displayName ?? "",
+          };
+          dispatch(setUser(userData)); // Add to redux store
+          ensureUserDocument(); // Add user to Firestore
+          navigate("/home");
+        } else {
+          setSignInError(true);
+          setEmailVerified(false);
+          auth.signOut();
+        }
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        console.log(errorCode, errorMessage);
+
         setSignInError(true);
       });
   };
@@ -104,7 +112,11 @@ const Login: React.FC = () => {
         >
           {signInError && (
             <div role="alert" className="alert alert-error">
-              <span>Error! Invalid email or password.</span>
+              <span>
+                {!emailVerified
+                  ? "Error! Email not verified."
+                  : " Error! Invalid email or password."}
+              </span>
             </div>
           )}
           <label className={errors.email ? "input input-error" : "input"}>
