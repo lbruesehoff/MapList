@@ -10,12 +10,14 @@ import {
   setLocationList,
   setSelectedFolder, // Make sure this action exists in your global-store
   deleteFolder,
+  editFolderName,
 } from "../../store/global-store";
 import PortalModal from "../../components/LocationFormDialog/LocationFormDialog";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import {
   createFolder,
   deleteFolderFirestore,
+  editFolderNameFirestore,
   getAllLocations,
   getFolders,
 } from "../../google/Fire-Store/database-calls";
@@ -27,6 +29,7 @@ const Home: React.FC = () => {
     register,
     handleSubmit,
     getValues,
+    setValue,
     setError,
     formState: { errors },
     reset,
@@ -42,6 +45,7 @@ const Home: React.FC = () => {
     (state: any) => state.global.selectedFolder
   );
   const [locationFormOpen, setLocationFormOpen] = useState(false);
+  const [selectedFolderId, setSelectedFolderId] = useState<string>("");
   const [leavingFolderId, setLeavingFolderId] = useState<string | null>(null);
   const [listView, setListView] = useState(true);
   const { screenWidth, screenHeight } = useWindowSize();
@@ -124,6 +128,43 @@ const Home: React.FC = () => {
       );
     }
     reset();
+  };
+
+  /**
+   * Open the edit folder name dialog and set the selected folder id.
+   * @param folderId
+   */
+  const handleEditFolderName = (folderId: string) => {
+    const dialog = document.getElementById(
+      "edit_folder_dialog"
+    ) as HTMLDialogElement | null;
+    if (dialog) {
+      setValue("editFolderName", "");
+      setSelectedFolderId(folderId);
+      dialog.showModal();
+    }
+  };
+
+  /**
+   * Submits the edited folder name and updates the redux store and Firestore.
+   * @param event
+   * @param id folder id
+   */
+  const submitEditFolderName = (
+    event: React.FormEvent<HTMLFormElement>,
+    id: string
+  ) => {
+    const dialog = document.getElementById(
+      "edit_folder_dialog"
+    ) as HTMLDialogElement;
+    event.preventDefault();
+
+    const newName = getValues("editFolderName");
+    if (newName) {
+      dispatch(editFolderName({ id, name: newName }));
+      editFolderNameFirestore(user?.uid || "", id, newName);
+      dialog.close();
+    }
   };
 
   /**
@@ -227,6 +268,45 @@ const Home: React.FC = () => {
             {/* </fieldset> */}
           </div>
         </dialog>
+        {/* DIALOG TO EDIT FOLDER NAME */}
+        <dialog
+          id="edit_folder_dialog"
+          className="modal"
+          onClick={(e) => {
+            // Close modal if click is outside modal-box
+            if (e.target === e.currentTarget) {
+              (e.currentTarget as HTMLDialogElement).close();
+            }
+          }}
+        >
+          <div className="modal-box">
+            <h3 className="font-bold text-lg">Edit Folder Name</h3>
+            <form
+              onSubmit={(e) => submitEditFolderName(e, selectedFolderId)}
+              className="folder-form"
+            >
+              {/* <legend className="fieldset-legend">Name</legend> */}
+              <div className="dialog-submit">
+                <input
+                  {...register("editFolderName")}
+                  type="text"
+                  className={
+                    errors.editFolderName ? "input input-error" : "input "
+                  }
+                  placeholder="Edit Folder Name"
+                  autoComplete="off"
+                />
+                <button
+                  className="btn btn-primary folder-submit-button"
+                  type="submit"
+                >
+                  Edit
+                </button>
+              </div>
+            </form>
+          </div>
+        </dialog>
+
         {/* DIALOG TO ADD TO FOLDER*/}
         {locationFormOpen && (
           <PortalModal onClose={closeLocationModal}></PortalModal>
@@ -247,6 +327,7 @@ const Home: React.FC = () => {
                     name={folder.name}
                     id={folder.id}
                     onDelete={() => handleDeleteFolder(folder.id)}
+                    onEdit={() => handleEditFolderName(folder.id)}
                     isLeaving={leavingFolderId === folder.id}
                   />
                 </div>

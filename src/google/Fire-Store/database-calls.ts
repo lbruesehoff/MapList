@@ -48,6 +48,15 @@ async function createFolder(userId: string, folder: FolderType) {
   await setDoc(folderRef, folder);
 }
 
+async function editFolderNameFirestore(
+  userId: string,
+  folderId: string,
+  newName: string
+) {
+  const folderRef = doc(db, `users/${userId}/folders`, folderId);
+  await updateDoc(folderRef, { name: newName });
+}
+
 // Add a location to a folder
 async function addLocation(
   userId: string,
@@ -124,6 +133,7 @@ export {
   ensureUserDocument,
   updateUserTheme,
   createFolder,
+  editFolderNameFirestore,
   addLocation,
   getFolders,
   getLocations,

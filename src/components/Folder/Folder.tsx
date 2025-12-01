@@ -4,17 +4,24 @@ import LocationList from "../Location-List/Location-List";
 import { useDispatch, useSelector } from "react-redux";
 import { setFolderOpen } from "../../store/global-store";
 import { FolderType } from "../../store/store-interfaces";
-import { TrashIcon } from "@phosphor-icons/react";
+import { PencilIcon, TrashIcon } from "@phosphor-icons/react";
 
 interface FolderProps {
   name?: string;
   id?: string;
   children?: ReactNode;
   onDelete?: () => void;
+  onEdit?: () => void;
   isLeaving?: boolean;
 }
 
-const Folder: React.FC<FolderProps> = ({ name, id, children, onDelete }) => {
+const Folder: React.FC<FolderProps> = ({
+  name,
+  id,
+  children,
+  onDelete,
+  onEdit,
+}) => {
   const dispatch = useDispatch();
   const openFolder = useSelector((state: any) => state.global.folderOpen);
   const folders = useSelector((state: any) => state.global.folders);
@@ -24,6 +31,14 @@ const Folder: React.FC<FolderProps> = ({ name, id, children, onDelete }) => {
 
   const toggleFolderOpen = () => {
     dispatch(setFolderOpen(true));
+  };
+
+  /**
+   * Trigger the edit folder callback when the edit button is clicked.
+   */
+  const editFolder = (event: React.MouseEvent) => {
+    event.stopPropagation();
+    if (onEdit) onEdit();
   };
 
   /**
@@ -58,13 +73,21 @@ const Folder: React.FC<FolderProps> = ({ name, id, children, onDelete }) => {
                   Folder
                 </div>
               </div>
+              <div>
+                <button
+                  className="btn btn-square btn-ghost"
+                  onClick={editFolder}
+                >
+                  <PencilIcon size={32} className="edit-folder-icon" />
+                </button>
 
-              <button
-                className="btn btn-square btn-ghost"
-                onClick={removeFolder}
-              >
-                <TrashIcon size={32} className="delete-folder-icon" />
-              </button>
+                <button
+                  className="btn btn-square btn-ghost"
+                  onClick={removeFolder}
+                >
+                  <TrashIcon size={32} className="delete-folder-icon" />
+                </button>
+              </div>
             </li>
           </ul>
         </div>

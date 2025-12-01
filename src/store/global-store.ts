@@ -45,6 +45,16 @@ const globalSlice = createSlice({
         state.folders.push({ id, name, locations });
       }
     },
+    editFolderName: (
+      state,
+      action: PayloadAction<{ id: string; name: string }>
+    ) => {
+      const { id, name } = action.payload;
+      const folder = state.folders.find((folder) => folder.id === id);
+      if (folder) {
+        folder.name = name;
+      }
+    },
     deleteFolder: (state, action: PayloadAction<string>) => {
       const folderId = action.payload;
       state.folders = state.folders.filter((folder) => folder.id !== folderId);
@@ -128,6 +138,7 @@ export const {
   setSelectedFolder,
   addFolder,
   deleteFolder,
+  editFolderName,
   setFolderOpen,
   setLocationList,
   addMarker,
