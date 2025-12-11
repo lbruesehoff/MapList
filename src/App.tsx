@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 import Footer from "./components/Footer/footer";
 import Membership from "./pages/Membership/membership";
 import VerifyEmail from "./pages/Verify-Email/VerifyEmail";
+import Settings from "./pages/Settings/settings";
 const getCurrentUser = () => {
   const user = useSelector((state: any) => state.global.user);
   return user ? true : false;
@@ -49,6 +50,14 @@ function App() {
           element={
             <ProtectedRoute>
               <Membership />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/settings"
+          element={
+            <ProtectedRoute>
+              <Settings />
             </ProtectedRoute>
           }
         />
