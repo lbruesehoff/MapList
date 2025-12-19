@@ -46,8 +46,8 @@
 
 .settings-reset-password {
   margin-top: 1rem;
+  cursor: pointer;
   > p {
-    cursor: pointer;
     color: var(--color-primary);
     text-decoration: underline;
     text-underline-offset: 5px;

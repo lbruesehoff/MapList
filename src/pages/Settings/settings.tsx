@@ -1,13 +1,19 @@
 import React, { useState } from "react";
 import "./settings.scss";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 interface SettingsProps {}
 
 const Settings: React.FC<SettingsProps> = () => {
+  const navigate = useNavigate();
   const name = useSelector((state: any) => state.global.user.name);
   const email = useSelector((state: any) => state.global.user.email);
   const [selectedMenu, setSelectedMenu] = useState<string>("Profile");
+
+  const navigateTo = (path: string) => {
+    navigate(path);
+  };
 
   return (
     <div className="settings-container">
@@ -41,7 +47,9 @@ const Settings: React.FC<SettingsProps> = () => {
                 <span className="bold">Email:</span> {email}
               </div>
               <div className="settings-reset-password">
-                <p>Reset Password</p>
+                <a onClick={() => navigateTo("/forgot-password")}>
+                  Reset Password
+                </a>
               </div>
             </div>
           )}

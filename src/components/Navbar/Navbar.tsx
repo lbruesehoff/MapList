@@ -133,7 +133,6 @@ const Navbar: React.FC = () => {
           <span>
             <img className="logo" src={logo} alt="Map Icon" />
           </span>
-          MapList
         </a>
       </div>
       <div className="navbar-end nav-bar-end-buttons">

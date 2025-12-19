@@ -185,7 +185,10 @@ const Login: React.FC = () => {
             )}
           </label>
           <div className="link-buttons">
-            <a href="/forgot-password" className="forgot-password-link">
+            <a
+              onClick={() => navigate("/forgot-password")}
+              className="forgot-password-link"
+            >
               Forgot Password?
             </a>
             <a href="" className="sign-up-link" onClick={handleSignUpRedirect}>
