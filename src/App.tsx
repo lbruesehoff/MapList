@@ -13,6 +13,7 @@ import VerifyEmail from "./pages/Verify-Email/VerifyEmail";
 import Settings from "./pages/Settings/settings";
 import ForgotPassword from "./pages/Forgot-Password/forgot-password";
 import ResetPassword from "./pages/Reset-Password/reset-password";
+import Contact from "./pages/Contact/contact";
 const getCurrentUser = () => {
   const user = useSelector((state: any) => state.global.user);
   return user ? true : false;
@@ -41,6 +42,7 @@ function App() {
         <Route path="/verify-email" element={<VerifyEmail />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/contact" element={<Contact />} />
         <Route
           path="/home"
           element={

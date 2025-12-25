@@ -107,6 +107,9 @@ const Navbar: React.FC = () => {
                 <li onClick={() => navigateTo("/settings")}>
                   <a>Settings</a>
                 </li>
+                <li onClick={() => navigateTo("/contact")}>
+                  <a>Contact Us</a>
+                </li>
 
                 <li onClick={handleLogout}>
                   <a>Logout</a>
@@ -119,6 +122,9 @@ const Navbar: React.FC = () => {
                 </li>
                 <li onClick={handleScrollToMemberships}>
                   <a>Memberships</a>
+                </li>
+                <li onClick={() => navigateTo("/contact")}>
+                  <a>Contact Us</a>
                 </li>
                 <li onClick={() => navigateTo("/login")}>
                   <a>Login</a>
