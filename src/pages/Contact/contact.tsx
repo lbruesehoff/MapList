@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
+import emailjs from "@emailjs/browser";
+import { EMAILJS_CONFIG } from "../../config/emailjs.config";
 import "./contact.scss";
 
 interface ContactFormData {
   name: string;
+  email: string;
   subject: string;
   description: string;
 }
@@ -28,15 +31,21 @@ const Contact: React.FC = () => {
     setSubmitSuccess(false);
 
     try {
-      // Add your submission logic here
-      // Example: await submitContactForm(data);
+      // Send email using EmailJS
+      await emailjs.send(
+        EMAILJS_CONFIG.SERVICE_ID,
+        EMAILJS_CONFIG.TEMPLATE_ID,
+        {
+          from_name: data.name,
+          from_email: data.email,
+          name: data.name,
+          email: data.email,
+          title: data.subject,
+          message: data.description,
+        },
+        EMAILJS_CONFIG.PUBLIC_KEY
+      );
 
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      console.log("Form submitted:", data);
-
-      // Success
       setSubmitSuccess(true);
       reset();
     } catch (error) {
@@ -68,7 +77,32 @@ const Contact: React.FC = () => {
       )}
       <form onSubmit={handleSubmit(onSubmit)} className="contact-form">
         <fieldset className="fieldset">
-          <legend className="fieldset-legend">Name?</legend>
+          <legend className="fieldset-legend">Subject</legend>
+          <input
+            type="text"
+            id="subject"
+            {...register("subject", {
+              required: "Subject is required",
+              minLength: {
+                value: 3,
+                message: "Subject must be at least 3 characters",
+              },
+            })}
+            className={`input full-width ${
+              errors.subject ? "input-error" : ""
+            }`}
+            placeholder="Type here"
+            aria-invalid={errors.subject ? "true" : "false"}
+            aria-describedby={errors.subject ? "subject-error" : undefined}
+          />
+          {errors.subject && (
+            <span className="error-text" id="subject-error" role="alert">
+              {errors.subject.message}
+            </span>
+          )}
+        </fieldset>
+        <fieldset className="fieldset">
+          <legend className="fieldset-legend">Name</legend>
           <input
             type="text"
             id="name"
@@ -92,27 +126,25 @@ const Contact: React.FC = () => {
         </fieldset>
 
         <fieldset className="fieldset">
-          <legend className="fieldset-legend">Subject</legend>
+          <legend className="fieldset-legend">Email</legend>
           <input
-            type="text"
-            id="subject"
-            {...register("subject", {
-              required: "Subject is required",
-              minLength: {
-                value: 3,
-                message: "Subject must be at least 3 characters",
+            type="email"
+            id="email"
+            {...register("email", {
+              required: "Email is required",
+              pattern: {
+                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                message: "Invalid email address",
               },
             })}
-            className={`input full-width ${
-              errors.subject ? "input-error" : ""
-            }`}
-            placeholder="Type here"
-            aria-invalid={errors.subject ? "true" : "false"}
-            aria-describedby={errors.subject ? "subject-error" : undefined}
+            className={`input full-width ${errors.email ? "input-error" : ""}`}
+            placeholder="your.email@example.com"
+            aria-invalid={errors.email ? "true" : "false"}
+            aria-describedby={errors.email ? "email-error" : undefined}
           />
-          {errors.subject && (
-            <span className="error-text" id="subject-error" role="alert">
-              {errors.subject.message}
+          {errors.email && (
+            <span className="error-text" id="email-error" role="alert">
+              {errors.email.message}
             </span>
           )}
         </fieldset>
