@@ -183,8 +183,25 @@ const Landing: React.FC = () => {
                       d="M5 13l4 4L19 7"
                     />
                   </svg>
+                  <span className="line-through">Download Maps</span>
+                </li>
+                <li className="opacity-50">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="size-4 me-2 inline-block text-base-content/50"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
                   <span className="line-through">
-                    Access to all new features
+                    Save Folders and Locations
                   </span>
                 </li>
               </ul>
@@ -272,7 +289,24 @@ const Landing: React.FC = () => {
                       d="M5 13l4 4L19 7"
                     />
                   </svg>
-                  <span>Access to all new features</span>
+                  <span>Download Maps</span>
+                </li>
+                <li>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="size-4 me-2 inline-block text-success"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                  <span>Save Folders and Locations</span>
                 </li>
               </ul>
               <div className="mt-6">
