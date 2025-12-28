@@ -16,10 +16,21 @@
   }
 }
 
+.folder-name-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.export-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
 .folder-name {
   font-size: 1.5rem;
   font-weight: bold;
-  margin-bottom: 2rem;
 }
 
 .slide-out-left {
