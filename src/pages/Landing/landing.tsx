@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./landing.scss";
 import locationLanding from "../../assets/images/location-landing.png";
 import desktopMock from "../../assets/images/mn-trip.png";
@@ -11,11 +11,22 @@ import forestDesktop from "../../assets/images/forestDesktop.png";
 import forestMapMobile from "../../assets/images/forestMapMobile.png";
 import forestListMobile from "../../assets/images/forestListMobile.png";
 import { useNavigate } from "react-router";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { auth } from "../../google/config";
+import { clearStore, setUser } from "../../store/global-store";
 
 const Landing: React.FC = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const getTheme = useSelector((state: any) => state.global.theme);
+
+  useEffect(() => {
+    // Log out user when they visit landing page
+    auth.signOut().then(() => {
+      dispatch(clearStore());
+      document.documentElement.setAttribute("data-theme", "light"); // Clear the Redux store
+    });
+  }, []);
 
   const navigateToSignUp = () => {
     navigate("/sign-up");

@@ -6,7 +6,7 @@ import Login from "./pages/Login/Login";
 import Landing from "./pages/Landing/landing";
 import { Routes, Route, Navigate } from "react-router-dom";
 import SignUp from "./pages/Sign-Up/SignUp";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Footer from "./components/Footer/footer";
 import Membership from "./pages/Membership/membership";
 import VerifyEmail from "./pages/Verify-Email/VerifyEmail";
@@ -14,6 +14,10 @@ import Settings from "./pages/Settings/settings";
 import ForgotPassword from "./pages/Forgot-Password/forgot-password";
 import ResetPassword from "./pages/Reset-Password/reset-password";
 import Contact from "./pages/Contact/contact";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./google/config";
+import { setUser } from "./store/global-store";
+import { UserType } from "./store/store-interfaces";
 const getCurrentUser = () => {
   const user = useSelector((state: any) => state.global.user);
   return user ? true : false;
@@ -26,11 +30,36 @@ function ProtectedRoute({ children }: { children: JSX.Element }) {
 }
 
 function App() {
+  const dispatch = useDispatch();
   const [isAuthenticated, setIsAuthenticated] = useState(getCurrentUser());
+  const [loading, setLoading] = useState(true);
 
+  // Used to keep user logged in on page refresh
   useEffect(() => {
-    // Listen for auth changes if needed
-  }, []);
+    // Listen for Firebase auth state changes
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user && user.emailVerified) {
+        // User is signed in and email is verified
+        const userData: UserType = {
+          id: user.uid,
+          email: user.email ?? "",
+          name: user.displayName ?? "",
+        };
+        dispatch(setUser(userData));
+      } else {
+        // User is signed out or email not verified
+        dispatch(setUser(null));
+      }
+      setLoading(false);
+    });
+
+    // Cleanup subscription on unmount
+    return () => unsubscribe();
+  }, [dispatch]);
+
+  if (loading) {
+    return <div className="App">Loading...</div>;
+  }
 
   return (
     <div className="App">

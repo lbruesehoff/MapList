@@ -11,7 +11,7 @@ import {
 } from "firebase/auth";
 import { auth, provider } from "../../google/config";
 import { UserType } from "../../store/store-interfaces";
-import { setUser } from "../../store/global-store";
+import { clearStore, setUser } from "../../store/global-store";
 import loginFlat from "../../assets/images/login-flat.png";
 import { ensureUserDocument } from "../../google/Fire-Store/database-calls";
 
@@ -29,6 +29,14 @@ const Login: React.FC = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [signInError, setSignInError] = useState(false);
   const [emailVerified, setEmailVerified] = useState(true);
+
+  useEffect(() => {
+    // Log out user when they visit landing page
+    auth.signOut().then(() => {
+      dispatch(clearStore());
+      document.documentElement.setAttribute("data-theme", "light"); // Clear the Redux store
+    });
+  }, []);
 
   const googleSignIn = () => {
     signInWithPopup(auth, provider)

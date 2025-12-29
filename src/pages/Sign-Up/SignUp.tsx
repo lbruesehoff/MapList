@@ -12,7 +12,7 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { auth, provider } from "../../google/config";
-import { setUser } from "../../store/global-store";
+import { clearStore, setUser } from "../../store/global-store";
 import { UserType } from "../../store/store-interfaces";
 import loginMapDark from "../../assets/images/login-map-dark.png";
 import loginMap from "../../assets/images/login-map.png";
@@ -32,6 +32,14 @@ const SignUp: React.FC = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [emailInUseError, setEmailInUseError] = useState(false);
   const [showConfirmEmail, setShowConfirmEmail] = useState(false);
+
+  useEffect(() => {
+    // Log out user when they visit landing page
+    auth.signOut().then(() => {
+      dispatch(clearStore());
+      document.documentElement.setAttribute("data-theme", "light"); // Clear the Redux store
+    });
+  }, []);
 
   const handleLoginRedirect = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
