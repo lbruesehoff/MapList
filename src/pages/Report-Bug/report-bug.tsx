@@ -4,16 +4,15 @@ import { useSelector } from "react-redux";
 import emailjs from "@emailjs/browser";
 import { EMAILJS_CONFIG } from "../../config/emailjs.config";
 import { RootState } from "../../store/store";
-import "./contact.scss";
+import "./report-bug.scss";
 
-interface ContactFormData {
+interface BugReportFormData {
   name: string;
   email: string;
-  subject: string;
   description: string;
 }
 
-const Contact: React.FC = () => {
+const ReportBug: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [submitSuccess, setSubmitSuccess] = useState(false);
@@ -22,9 +21,9 @@ const Contact: React.FC = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors, touchedFields },
+    formState: { errors },
     reset,
-  } = useForm<ContactFormData>({
+  } = useForm<BugReportFormData>({
     mode: "onTouched",
     defaultValues: {
       name: user?.name || "",
@@ -32,7 +31,7 @@ const Contact: React.FC = () => {
     },
   });
 
-  const onSubmit: SubmitHandler<ContactFormData> = async (data) => {
+  const onSubmit: SubmitHandler<BugReportFormData> = async (data) => {
     setIsSubmitting(true);
     setSubmitError(null);
     setSubmitSuccess(false);
@@ -41,13 +40,13 @@ const Contact: React.FC = () => {
       // Send email using EmailJS
       await emailjs.send(
         EMAILJS_CONFIG.SERVICE_ID,
-        EMAILJS_CONFIG.TEMPLATE_ID,
+        EMAILJS_CONFIG.BUG_REPORT_TEMPLATE_ID,
         {
           from_name: data.name,
           from_email: data.email,
           name: data.name,
           email: data.email,
-          title: data.subject,
+          title: "Bug Report",
           message: data.description,
         },
         EMAILJS_CONFIG.PUBLIC_KEY
@@ -59,7 +58,7 @@ const Contact: React.FC = () => {
       setSubmitError(
         error instanceof Error
           ? error.message
-          : "Failed to submit form. Please try again."
+          : "Failed to submit bug report. Please try again."
       );
     } finally {
       setIsSubmitting(false);
@@ -67,47 +66,22 @@ const Contact: React.FC = () => {
   };
 
   return (
-    <div className="contact-container">
-      <div className="badge badge-primary">Contact Us</div>
-      <h1 className="contact-header">Lets get in touch</h1>
-      <p className="contact-description">
-        Or reach out directly at{" "}
-        <a href="mailto:contact@example.com">contact@example.com</a>
+    <div className="report-bug-container">
+      <div className="badge badge-error">Report a Bug</div>
+      <h1 className="report-bug-header">Help us improve</h1>
+      <p className="report-bug-description">
+        Found a bug? Let us know and we'll fix it as soon as possible.
       </p>
 
       {submitError && <div className="alert alert-error">{submitError}</div>}
 
       {submitSuccess && (
         <div className="alert alert-success">
-          Thank you! Your message has been sent successfully.
+          Thank you! Your bug report has been submitted successfully.
         </div>
       )}
-      <form onSubmit={handleSubmit(onSubmit)} className="contact-form">
-        <fieldset className="fieldset">
-          <legend className="fieldset-legend">Subject</legend>
-          <input
-            type="text"
-            id="subject"
-            {...register("subject", {
-              required: "Subject is required",
-              minLength: {
-                value: 3,
-                message: "Subject must be at least 3 characters",
-              },
-            })}
-            className={`input full-width ${
-              errors.subject ? "input-error" : ""
-            }`}
-            placeholder="Type here"
-            aria-invalid={errors.subject ? "true" : "false"}
-            aria-describedby={errors.subject ? "subject-error" : undefined}
-          />
-          {errors.subject && (
-            <span className="error-text" id="subject-error" role="alert">
-              {errors.subject.message}
-            </span>
-          )}
-        </fieldset>
+
+      <form onSubmit={handleSubmit(onSubmit)} className="report-bug-form">
         <fieldset className="fieldset">
           <legend className="fieldset-legend">Name</legend>
           <input
@@ -157,20 +131,20 @@ const Contact: React.FC = () => {
         </fieldset>
 
         <fieldset className="fieldset">
-          <legend className="fieldset-legend">Message</legend>
+          <legend className="fieldset-legend">Bug Description</legend>
           <textarea
             id="description"
             {...register("description", {
-              required: "Message is required",
+              required: "Bug description is required",
               minLength: {
                 value: 10,
-                message: "Message must be at least 10 characters",
+                message: "Description must be at least 10 characters",
               },
             })}
             className={`textarea h-24 full-width ${
               errors.description ? "input-error" : ""
             }`}
-            placeholder="Type your message here"
+            placeholder="Please describe the bug you encountered..."
             aria-invalid={errors.description ? "true" : "false"}
             aria-describedby={
               errors.description ? "description-error" : undefined
@@ -188,11 +162,11 @@ const Contact: React.FC = () => {
           className="btn btn-primary submit-button"
           disabled={isSubmitting}
         >
-          {isSubmitting ? "Submitting..." : "Submit"}
+          {isSubmitting ? "Submitting..." : "Submit Bug Report"}
         </button>
       </form>
     </div>
   );
 };
 
-export default Contact;
+export default ReportBug;

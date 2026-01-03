@@ -110,6 +110,12 @@ const Navbar: React.FC = () => {
                 <li onClick={() => navigateTo("/contact")}>
                   <a>Contact Us</a>
                 </li>
+                <li
+                  onClick={() => navigateTo("/report-bug")}
+                  className="red-text"
+                >
+                  <a>Report a Bug</a>
+                </li>
 
                 <li onClick={handleLogout}>
                   <a>Logout</a>

@@ -18,6 +18,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./google/config";
 import { setUser } from "./store/global-store";
 import { UserType } from "./store/store-interfaces";
+import ReportBug from "./pages/Report-Bug/report-bug";
 const getCurrentUser = () => {
   const user = useSelector((state: any) => state.global.user);
   return user ? true : false;
@@ -85,6 +86,14 @@ function App() {
           element={
             <ProtectedRoute>
               <Membership />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/report-bug"
+          element={
+            <ProtectedRoute>
+              <ReportBug />
             </ProtectedRoute>
           }
         />

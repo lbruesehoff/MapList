@@ -10,4 +10,9 @@ export const EMAILJS_CONFIG = {
 
   // Your EmailJS Template ID
   TEMPLATE_ID: import.meta.env.VITE_EMAILJS_TEMPLATE_ID || "YOUR_TEMPLATE_ID",
+
+  // EmailJS Bug Report Template ID
+  BUG_REPORT_TEMPLATE_ID:
+    import.meta.env.VITE_EMAILJS_BUG_REPORT_TEMPLATE_ID ||
+    "YOUR_BUG_REPORT_TEMPLATE_ID",
 };

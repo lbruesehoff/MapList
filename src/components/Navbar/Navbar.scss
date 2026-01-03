@@ -11,6 +11,11 @@
   text-transform: capitalize;
 }
 
+.red-text {
+  color: #e74c3c;
+  font-weight: 600;
+}
+
 @media screen and (max-width: 768px) {
   .logout {
     display: none;
