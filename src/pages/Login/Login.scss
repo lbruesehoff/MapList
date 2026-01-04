@@ -72,6 +72,8 @@
     flex-direction: column-reverse;
     justify-content: flex-end;
     gap: 2rem;
+    height: auto;
+    padding-bottom: 2rem;
   }
 
   .login-title {
@@ -84,7 +86,6 @@
 
   .login-image-container {
     width: auto;
-    height: 20%;
     margin: 1rem;
     border-radius: 20px;
     background-position: center top; // Moves the background image up

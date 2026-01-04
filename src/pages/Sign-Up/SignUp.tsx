@@ -14,8 +14,7 @@ import {
 import { auth, provider } from "../../google/config";
 import { clearStore, setUser } from "../../store/global-store";
 import { UserType } from "../../store/store-interfaces";
-import loginMapDark from "../../assets/images/login-map-dark.png";
-import loginMap from "../../assets/images/login-map.png";
+import signUp from "../../assets/images/sign-up.png";
 import { ensureUserDocument } from "../../google/Fire-Store/database-calls";
 
 const SignUp: React.FC = () => {
@@ -310,8 +309,8 @@ const SignUp: React.FC = () => {
       </div>
       <div className="sign-up-image-container">
         <img
-          src={isDarkMode ? loginMapDark : loginMap}
-          alt="Login Map"
+          src={signUp}
+          alt="Sign Up Illustration"
           style={{
             width: "100%",
             height: "100%",
