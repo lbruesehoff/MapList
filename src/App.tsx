@@ -17,7 +17,7 @@ import Contact from "./pages/Contact/contact";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./google/config";
 import { setUser } from "./store/global-store";
-import { UserType } from "./store/store-interfaces";
+import { MembershipLevels, UserType } from "./store/store-interfaces";
 import ReportBug from "./pages/Report-Bug/report-bug";
 const getCurrentUser = () => {
   const user = useSelector((state: any) => state.global.user);
@@ -45,6 +45,7 @@ function App() {
           id: user.uid,
           email: user.email ?? "",
           name: user.displayName ?? "",
+          membership: MembershipLevels.Free,
         };
         dispatch(setUser(userData));
       } else {

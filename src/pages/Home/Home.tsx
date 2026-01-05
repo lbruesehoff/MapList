@@ -11,6 +11,7 @@ import {
   setSelectedFolder, // Make sure this action exists in your global-store
   deleteFolder,
   editFolderName,
+  setMembershipLevel,
 } from "../../store/global-store";
 import PortalModal from "../../components/LocationFormDialog/LocationFormDialog";
 import { useWindowSize } from "../../hooks/useWindowSize";
@@ -20,9 +21,11 @@ import {
   editFolderNameFirestore,
   getAllLocations,
   getFolders,
+  getMemershipLevel,
 } from "../../google/Fire-Store/database-calls";
 import { getAuth } from "@firebase/auth";
 import "./Home.scss";
+import { MembershipLevels, UserType } from "../../store/store-interfaces";
 
 const Home: React.FC = () => {
   const {
@@ -44,6 +47,7 @@ const Home: React.FC = () => {
   const selectedFolder = useSelector(
     (state: any) => state.global.selectedFolder
   );
+  const reduxUser = useSelector((state: any) => state.global.user as UserType);
   const [locationFormOpen, setLocationFormOpen] = useState(false);
   const [selectedFolderId, setSelectedFolderId] = useState<string>("");
   const [leavingFolderId, setLeavingFolderId] = useState<string | null>(null);
@@ -67,6 +71,10 @@ const Home: React.FC = () => {
       locations.forEach((location) => {
         dispatch(setLocationList(location));
       });
+      const membership = await getMemershipLevel(user?.uid || "");
+      dispatch(
+        setMembershipLevel(membership ? membership : MembershipLevels.Free)
+      );
     };
     fetchData();
   }, []);
@@ -254,9 +262,36 @@ const Home: React.FC = () => {
                   placeholder="Folder Name"
                   autoComplete="off"
                 />
+                {/* Disable pro features if limit reached for folder creation */}
+                {reduxUser.membership === MembershipLevels.Free &&
+                  folders.length >= 2 && (
+                    <div role="alert" className="alert alert-error">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-6 w-6 shrink-0 stroke-current"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+                        />
+                      </svg>
+                      <span>
+                        You've reached the maximum number of folders for your
+                        membership level.
+                      </span>
+                    </div>
+                  )}
                 <button
                   className="btn btn-primary folder-submit-button"
                   type="submit"
+                  disabled={
+                    reduxUser.membership === MembershipLevels.Free &&
+                    folders.length >= 2
+                  }
                 >
                   Add
                 </button>

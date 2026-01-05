@@ -10,7 +10,7 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { auth, provider } from "../../google/config";
-import { UserType } from "../../store/store-interfaces";
+import { MembershipLevels, UserType } from "../../store/store-interfaces";
 import { clearStore, setUser } from "../../store/global-store";
 import loginFlat from "../../assets/images/login-flat.png";
 import { ensureUserDocument } from "../../google/Fire-Store/database-calls";
@@ -52,6 +52,7 @@ const Login: React.FC = () => {
           id: user.uid,
           email: user.email ?? "",
           name: user.displayName ?? "",
+          membership: MembershipLevels.Free,
         };
         dispatch(setUser(userData)); // Add to redux store
         ensureUserDocument(); // Add user to Firestore
@@ -76,6 +77,7 @@ const Login: React.FC = () => {
             id: user.uid,
             email: user.email ?? "",
             name: user.displayName ?? "",
+            membership: MembershipLevels.Free,
           };
           dispatch(setUser(userData)); // Add to redux store
           ensureUserDocument(); // Add user to Firestore

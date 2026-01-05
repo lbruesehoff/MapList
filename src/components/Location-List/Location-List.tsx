@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./Location-List.scss";
-import { LocationType } from "../../store/store-interfaces";
+import { LocationType, MembershipLevels } from "../../store/store-interfaces";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteLocation, setLocationList } from "../../store/global-store";
 import { TrashIcon } from "@phosphor-icons/react/dist/ssr/Trash";
@@ -26,6 +26,7 @@ const LocationList: React.FC<LocationListProps> = ({ locations, onSelect }) => {
   const auth = getAuth();
   const { data: googleMapsApiKeyData } = useGetGoogleMapsApiKeyQuery();
   const user = auth.currentUser;
+  const storeUser = useSelector((state: any) => state.global.user);
   const selectedFolder = useSelector(
     (state: any) => state.global.selectedFolder
   );
@@ -48,6 +49,14 @@ const LocationList: React.FC<LocationListProps> = ({ locations, onSelect }) => {
    * @returns
    */
   const captureScreenshot = async () => {
+    if (storeUser.membership === MembershipLevels.Free) {
+      const modal = document.getElementById(
+        "upgrade-modal"
+      ) as HTMLDialogElement | null;
+      modal?.showModal();
+
+      return;
+    }
     setIsExporting(true);
 
     try {
@@ -202,6 +211,16 @@ const LocationList: React.FC<LocationListProps> = ({ locations, onSelect }) => {
           </div>
         )}
       </ul>
+      <dialog id="upgrade-modal" className="modal">
+        <div className="modal-box">
+          <h3 className="font-bold text-lg">Sorry!</h3>
+          <p className="py-4">Downloading maps is a Pro feature.</p>
+          {/* <p className="py-4">Press ESC key or click outside to close</p> */}
+        </div>
+        <form method="dialog" className="modal-backdrop">
+          <button>close</button>
+        </form>
+      </dialog>
     </div>
   );
 };

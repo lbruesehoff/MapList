@@ -32,6 +32,25 @@ async function ensureUserDocument() {
     });
   }
 }
+
+async function updateUserMembership(level: string) {
+  const auth = getAuth();
+  const user = auth.currentUser;
+  if (!user?.uid) {
+    throw new Error("User is not authenticated.");
+  }
+  const userRef = doc(db, "users", user.uid);
+  await updateDoc(userRef, { membership: level });
+}
+
+async function getMemershipLevel(userId: string) {
+  const userDocRef = doc(db, "users", userId);
+  const userDoc = await getDoc(userDocRef);
+  return userDoc.exists()
+    ? (userDoc.data() as { membership: string }).membership
+    : "Free";
+}
+
 async function updateUserTheme(theme: string) {
   const auth = getAuth();
   const user = auth.currentUser;
@@ -131,6 +150,8 @@ async function deleteLocationFirestore(
 
 export {
   ensureUserDocument,
+  updateUserMembership,
+  getMemershipLevel,
   updateUserTheme,
   createFolder,
   editFolderNameFirestore,

@@ -1,8 +1,43 @@
 import React from "react";
 import "./membership.scss";
+import { useDispatch, useSelector } from "react-redux";
+import { set } from "react-hook-form";
+import { setMembershipLevel } from "../../store/global-store";
+import { MembershipLevels } from "../../store/store-interfaces";
+import { createSelector } from "@reduxjs/toolkit";
+import { updateUserMembership } from "../../google/Fire-Store/database-calls";
 const Membership: React.FC = () => {
+  const dispatch = useDispatch();
+  const reduxUser = useSelector((state: any) => state.global.user);
+
+  const freeMembership = () => {
+    console.log("Free Membership selected");
+  };
+
+  const upgradeMembership = () => {
+    dispatch(setMembershipLevel(MembershipLevels.Pro));
+    updateUserMembership(MembershipLevels.Free);
+  };
   return (
     <div className="memberships-container">
+      {reduxUser.membership === MembershipLevels.Pro && (
+        <div role="alert" className="alert alert-success">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6 shrink-0 stroke-current"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+          <span>You're already a Pro!</span>
+        </div>
+      )}
       <div className="badge badge-xs badge-warning">
         Get the most out of your membership
       </div>
@@ -113,7 +148,15 @@ const Membership: React.FC = () => {
               </li>
             </ul>
             <div className="mt-6">
-              <button className="btn btn-neutral btn-block">Join Now</button>
+              <button
+                onClick={freeMembership}
+                className="btn btn-neutral btn-block"
+                disabled={true}
+              >
+                {reduxUser.membership === MembershipLevels.Pro
+                  ? "You're a Pro!"
+                  : "Current Plan"}
+              </button>
             </div>
           </div>
         </div>
@@ -212,7 +255,15 @@ const Membership: React.FC = () => {
               </li>
             </ul>
             <div className="mt-6">
-              <button className="btn btn-primary btn-block">Upgrade Now</button>
+              <button
+                onClick={upgradeMembership}
+                className="btn btn-primary btn-block"
+                disabled={reduxUser.membership === MembershipLevels.Pro}
+              >
+                {reduxUser.membership === MembershipLevels.Pro
+                  ? "You're a Pro!"
+                  : "Upgrade Now"}
+              </button>
             </div>
           </div>
         </div>

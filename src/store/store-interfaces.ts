@@ -11,6 +11,12 @@ export interface UserType {
   id: string;
   email: string;
   name: string;
+  membership: MembershipLevels;
+}
+
+export enum MembershipLevels {
+  Free = "Free",
+  Pro = "Pro",
 }
 
 export interface FolderType {

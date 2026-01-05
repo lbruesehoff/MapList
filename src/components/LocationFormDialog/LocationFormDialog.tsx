@@ -8,6 +8,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { addMarker, setLocationList } from "../../store/global-store";
 import { addLocation } from "../../google/Fire-Store/database-calls";
 import { getAuth } from "firebase/auth";
+import {
+  FolderType,
+  MembershipLevels,
+  UserType,
+} from "../../store/store-interfaces";
 
 interface PortalModalProps {
   onClose: () => void;
@@ -24,6 +29,9 @@ const PortalModal: React.FC<PortalModalProps> = ({ onClose }) => {
   } = useForm();
   const dispatch = useDispatch();
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const reduxUser = useSelector((state: any) => state.global.user as UserType);
+  const folders = useSelector((state: any) => state.global.folders);
+
   const [placeAutocomplete, setPlaceAutocomplete] =
     useState<google.maps.places.Autocomplete | null>(null);
   const [selectedPlace, setSelectedPlace] =
@@ -37,6 +45,9 @@ const PortalModal: React.FC<PortalModalProps> = ({ onClose }) => {
   const selectedFolder = useSelector(
     (state: any) => state.global.selectedFolder
   );
+  const locations = folders
+    .filter((folder: any) => folder.id === selectedFolder.id)
+    .map((folder: FolderType) => folder.locations)[0];
 
   const auth = getAuth();
   const user = auth.currentUser;
@@ -134,9 +145,35 @@ const PortalModal: React.FC<PortalModalProps> = ({ onClose }) => {
                   {selectedPlace.formatted_address}
                 </div>
               )}
+              {reduxUser.membership === MembershipLevels.Free &&
+                locations.length >= 5 && (
+                  <div role="alert" className="alert alert-error">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-6 w-6 shrink-0 stroke-current"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+                      />
+                    </svg>
+                    <span>
+                      You've reached the maximum number of locations for your
+                      membership level.
+                    </span>
+                  </div>
+                )}
               <button
                 className="btn btn-primary location-add-button"
                 type="submit"
+                disabled={
+                  reduxUser.membership === MembershipLevels.Free &&
+                  locations.length >= 5
+                }
               >
                 Add
               </button>

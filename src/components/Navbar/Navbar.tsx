@@ -10,13 +10,14 @@ import {
 import { Themes, LandingThemes } from "../../themes/theme-types";
 import logo from "../../assets/images/maplist-logo.png";
 import "./Navbar.scss";
+import { MembershipLevels, UserType } from "../../store/store-interfaces";
 
 const Navbar: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const auth = getAuth();
   const userFireStore = auth.currentUser;
-  const user = useSelector((state: any) => state.global.user);
+  const user = useSelector((state: any) => state.global.user as UserType);
   const getTheme = useSelector((state: any) => state.global.theme);
 
   const handleThemeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -166,7 +167,11 @@ const Navbar: React.FC = () => {
             className="dropdown-content bg-base-300 rounded-box z-1 w-52 p-2 shadow-2xl"
           >
             {Themes &&
-              Object.values(user ? Themes : LandingThemes).map((theme) => (
+              Object.values(
+                user && user.membership === MembershipLevels.Pro
+                  ? Themes
+                  : LandingThemes
+              ).map((theme) => (
                 <li key={theme}>
                   <input
                     type="radio"

@@ -23,3 +23,9 @@
   font-weight: 600;
   font-style: italic;
 }
+
+@media (max-width: 768px) {
+  .memberships-container {
+    height: auto;
+  }
+}

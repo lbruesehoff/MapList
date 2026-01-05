@@ -4,6 +4,7 @@ import {
   GlobalState,
   LocationMarker,
   LocationType,
+  MembershipLevels,
   UserType,
 } from "./store-interfaces";
 
@@ -30,6 +31,11 @@ const globalSlice = createSlice({
     },
     setUser: (state, action: PayloadAction<UserType | null>) => {
       state.user = action.payload;
+    },
+    setMembershipLevel: (state, action: PayloadAction<string>) => {
+      if (state.user) {
+        state.user.membership = action.payload as MembershipLevels;
+      }
     },
     setTheme: (state, action: PayloadAction<string>) => {
       state.theme = action.payload;
@@ -134,6 +140,7 @@ const globalSlice = createSlice({
 export const {
   clearStore,
   setUser,
+  setMembershipLevel,
   setTheme,
   setSelectedFolder,
   addFolder,
