@@ -8,6 +8,7 @@ interface SettingsProps {}
 const Settings: React.FC<SettingsProps> = () => {
   const navigate = useNavigate();
   const name = useSelector((state: any) => state.global.user.name);
+  const membership = useSelector((state: any) => state.global.user.membership);
   const email = useSelector((state: any) => state.global.user.email);
   const [selectedMenu, setSelectedMenu] = useState<string>("Profile");
 
@@ -38,9 +39,14 @@ const Settings: React.FC<SettingsProps> = () => {
         <div className="settings-content">
           <h1 className="settings-content-header">{selectedMenu}</h1>
           {selectedMenu === "Profile" ? (
-            <div className="settings-content-name">
-              <span className="bold">Name:</span> {name}
-            </div>
+            <>
+              <div className="settings-content-name">
+                <span className="bold">Name:</span> {name}
+              </div>
+              <div className="settings-content-name">
+                <span className="bold">Membership:</span> {membership}
+              </div>
+            </>
           ) : (
             <div className="settings-content-account">
               <div className="settings-email">
