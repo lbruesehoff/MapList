@@ -12,11 +12,16 @@ import { useGetGoogleMapsApiKeyQuery } from "./api/firebase-api";
 function AppWithApiKey() {
   const { data, error, isLoading } = useGetGoogleMapsApiKeyQuery();
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error </div>;
+  if (isLoading)
+    return (
+      <div className="loading-screen text-success">
+        <span className="loading loading-ring loading-xl"></span>
+      </div>
+    );
+  if (error) return <div>Error Loading. Please try again.</div>;
 
   const apiKey = data?.apiKey;
-  if (!apiKey) return <div>API key not found</div>;
+  if (!apiKey) return <div>Error Loading. Please try again.</div>;
 
   return (
     <APIProvider apiKey={apiKey}>

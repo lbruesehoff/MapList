@@ -3,6 +3,16 @@
   themes: all;
 }
 
+.loading-screen {
+  height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  > span {
+    width: 10rem;
+  }
+}
+
 .App {
   height: 90vh;
 }

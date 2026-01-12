@@ -59,9 +59,13 @@ function App() {
     return () => unsubscribe();
   }, [dispatch]);
 
-  if (loading) {
-    return <div className="App">Loading...</div>;
-  }
+  // if (loading) {
+  //   return (
+  //     <div className="loading-screen text-success">
+  //       <span className="loading loading-ring loading-xl"></span>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="App">
